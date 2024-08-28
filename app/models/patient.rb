@@ -8,6 +8,8 @@ class Patient < ApplicationRecord
   has_many :appointments, dependent: :destroy
   has_many :messages, dependent: :destroy
 
+  validates :email, presence: true, uniqueness: true
+
   # Method to check who is online
   def online?
     !last_sign_out_at.present? || last_sign_out_at < 15.minutes.ago
