@@ -1,0 +1,15 @@
+<h1>Bem-vindo ao Consultório Online</h1>
+
+<p>Este é o portal onde pacientes podem marcar consultas e interagir com o psicólogo.</p>
+
+<% if psychologist_signed_in? %>
+  <p>Bem-vindo, <%= current_psychologist.email %>!</p>
+  <%= link_to 'Ver Consultas', appointments_path %>
+<% elsif patient_signed_in? %>
+  <p>Bem-vindo, <%= current_patient.email %>!</p>
+  <%= link_to 'Ver Consultas', appointments_path %>
+<% else %>
+  <p>Por favor, faça o login para acessar o sistema:</p>
+  <%= link_to 'Login Psicólogo', new_psychologist_session_path %> |
+  <%= link_to 'Login Paciente', new_patient_session_path %>
+<% end %>

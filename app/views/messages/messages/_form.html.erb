@@ -1,0 +1,6 @@
+<%= simple_form_for [ @patient, Message.new ] do |form| %>
+  <div>
+    <%= form.input :content, as: :text, label: "Type your message:" %>
+  </div>
+  <%= form.button :submit, "Send" %>
+<% end %>

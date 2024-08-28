@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2024-08-28 15:07:13
+  psychologist: one
+  patient: one
+
+two:
+  date: 2024-08-28 15:07:13
+  psychologist: two
+  patient: two

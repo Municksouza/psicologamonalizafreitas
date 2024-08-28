@@ -15,6 +15,27 @@
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.css' %>
+    <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.js' %>
+
+
+    <div id="online-users">
+      <h2>Online Users</h2>
+    </div>
+
+
+
+    <nav>
+      <%= link_to 'Home', root_path %> |
+      <% if psychologist_signed_in? %>
+        <%= link_to 'Logout', destroy_psychologist_session_path, method: :delete %>
+      <% elsif patient_signed_in? %>
+        <%= link_to 'Logout', destroy_patient_session_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Login Psicólogo', new_psychologist_session_path %> |
+        <%= link_to 'Login Paciente', new_patient_session_path %>
+      <% end %>
+    </nav>
   </head>
 
   <body>

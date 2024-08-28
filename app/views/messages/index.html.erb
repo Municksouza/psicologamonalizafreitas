@@ -1,0 +1,9 @@
+<h1>Messages</h1>
+
+<%= render 'form' %>
+
+<ul>
+  <% @messages.each do |message| %>
+    <li><strong><%= message.sender.email %></strong>: <%= message.content %></li>
+  <% end %>
+</ul>
