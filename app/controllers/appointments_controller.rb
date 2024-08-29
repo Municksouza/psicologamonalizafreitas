@@ -10,6 +10,10 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def show
+    @appointment = Appointment.find(params[:id])
+  end
+
   def new
     @appointment = current_psychologist.appointments.new
   end

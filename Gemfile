@@ -34,6 +34,9 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem "devise"
+gem "simple_form"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
@@ -43,8 +46,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "devise"
-  gem "simple_form"
+  gem "rspec-rails", "~> 5.0"
+  gem "capybara", "~> 3.36"
+  gem "database_cleaner-active_record"
+
 end
 
 group :development do
@@ -52,11 +57,11 @@ group :development do
   gem "web-console"
 
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
-  gem "error_highlight", ">= 0.3.0", platforms: [ :ruby ]
+  # gem "error_highlight", ">= 0.3.0", platforms: [ :ruby ]
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
+  # gem "selenium-webdriver", "~> 4.24"
+  # gem "webdrivers", "~> 5.2.0"
 end

@@ -1,11 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  date: 2024-08-28 15:07:13
-  psychologist: one
-  patient: one
+  patient: one  # Reference to a patient fixture
+  psychologist: one  # Reference to a psychologist fixture
+  date: <%= 1.day.from_now.to_date %>  # Correctly formatted date
+  time: <%= Time.current.strftime("%H:%M:%S") %>  # Correctly formatted time
 
 two:
-  date: 2024-08-28 15:07:13
-  psychologist: two
-  patient: two
+  patient: two  # Reference to another patient fixture
+  psychologist: two  # Reference to another psychologist fixture
+  date: <%= 2.days.from_now.to_date %>  # Another correctly formatted date
+  time: <%= (Time.current + 1.hour).strftime("%H:%M:%S") %>  # Another time
