@@ -49,7 +49,6 @@ group :development, :test do
   gem "rspec-rails", "~> 5.0"
   gem "capybara", "~> 3.36"
   gem "database_cleaner-active_record"
-
 end
 
 group :development do
