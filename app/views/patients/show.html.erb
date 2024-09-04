@@ -1,0 +1,28 @@
+# <!-- app/views/patients/show.html.erb -->
+# <h1><%= @patient.name %>'s Profile</h1>
+# <p>Email: <%= @patient.email %></p>
+# <p>Phone Number: <%= @patient.phone_number %></p>
+# <p>Bio: <%= @patient.bio %></p>
+
+# <h2>Appointments</h2>
+# <ul>
+#   <% @appointments.each do |appointment| %>
+#     <li>
+#       <%= appointment.start_time %> - <%= appointment.end_time %>
+#       with <%= appointment.psychologist.name %>
+#       <%= link_to 'Cancel', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
+#     </li>
+#   <% end %>
+# </ul>
+
+
+<!-- app/views/patients/show.html.erb -->
+<h1><%= @patient.name %>'s Profile</h1>
+<p>Email: <%= @patient.email %></p>
+<p>Phone Number: <%= @patient.phone_number %></p>
+<p>Bio: <%= @patient.bio %></p>
+
+<h2>Appointments</h2>
+<%= render 'appointments/index' %>
+#
+#

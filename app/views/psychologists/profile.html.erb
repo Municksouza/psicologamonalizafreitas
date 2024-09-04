@@ -1,0 +1,148 @@
+<div class="profile-background">
+  <div class= "container profile-border">
+    <h1>Welcome</h1>
+    <p>
+    Hello and welcome to TalkRoom, a platform dedicated to providing accessible mental health support while helping you gain valuable real-world experience. We are thrilled to have you join our team of passionate and compassionate counsellors.</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="counsellor-data d-flex justify-content-center py-4">
+    <div class="container justify-content-center">
+      <div class="row align-items-center py-4">
+        <div class="col-md-4 text-center">
+          <img src="<%= current_counsellor.photo.attached? ? cl_image_path(current_counsellor.photo.key) : asset_path('counsellor2.png') %>" alt="Profile" class="counsellor-image">
+        </div>
+      <div class="col-md-8">
+        <p><strong>Email:</strong> <%= @counsellor.email %></p>
+        <p><strong>Full Name:</strong> <%= @counsellor.fullname %></p>
+        <p><strong>Gender:</strong> <%= @counsellor.gender %></p>
+        <p><strong>Location:</strong> <%= @counsellor.location %></p>
+        <p><strong>Date of Birth:</strong> <%= @counsellor.birthdate.strftime("%B %d, %Y") if @counsellor.birthdate %></p>
+        <p><strong>University Name:</strong> <%= @counsellor.university_name %></p>
+        <p><strong>University ID:</strong> <%= @counsellor.university_id %></p>
+        <p><strong>Degree Program:</strong> <%= @counsellor.degree_program %></p>
+        <p><strong>Year of Study:</strong> <%= @counsellor.year_of_study %></p>
+        <p><strong>Expected Graduation Date:</strong> <%= @counsellor.expected_graduation_date %></p>
+        <div class=" d-flex "> <%= link_to 'Change Password', edit_user_registration_path, class: 'btn-change-password' %></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="container-previous-appointments-margin-top d-flex justify-content-center">
+  <div class="col-md-4 mb-6">
+    <img src="/assets/profile7.png" class="img-fluid">
+  </div>
+
+  <div data-controller="appointments" id="" class="col-md-8">
+    <div class="row justify-content-center" data-appointments-target="appointments">
+      <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
+        <%= render "pending_appointments", appointment: appointment, index: index %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<div class="big-tag w-100">
+  <%= image_tag 'home8.png', loading: 'lazy', class:'imag1' %>
+  <div class="big-tag2">
+    <h1>Taking care of your mental health is essential for your overall well-being</h1>
+    <%= image_tag 'home7.png', loading: 'lazy', class:'imag2'%>
+  </div>
+</div>
+
+
+<div class="previous-title">
+  On-going Appointments
+</div>
+
+
+<div class="container-previous-appointments-margin-top d-flex justify-content-center">
+  <div class="col-md-4 mb-6">
+    <%= image_tag asset_path('counsellor2.png'), alt: 'Default Profile Photo', class: 'img-counsell' %>
+  </div>
+
+  <div id="carouselOnGoingAppointments" class="carousel slide col-md-8">
+    <div class="carousel-inner">
+      <% @appointments_confirmed.order(created_at: :desc).each_with_index do |appointment, index| %>
+        <div class="carousel-item <%= 'active' if index == 0 %>">
+          <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+              <div class="card-previous-appointments">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <div class="card-appointments flex-grow-1">
+                      <% if appointment.user.photo.attached? %>
+                        <%= image_tag cl_image_path(appointment.user.photo.key), alt: 'Profile Photo', class: 'img-fluid img-counsellor' %>
+                      <% else %>
+                        <%= image_tag asset_path('counsellor.png'), alt: 'Default Profile Photo', class: 'img-fluid img-counsellor' %>
+                      <% end %>
+                      <div class="card-previous-appointments d-flex justify-content-center">
+                        <div class="card-body-counsellor">
+                          <h5 class="card-title"><strong><%= appointment.user.fullname %></strong></h5>
+                          <p class="card-text"><strong><%= appointment.symptom %></strong></p>
+                          <strong>Schedule Time:</strong>
+                          <%= appointment.schedule_time.strftime("%B %d, %Y at %I:%M %p") %>
+                        </div>
+                      </div>
+
+                      <% if appointment.counsellor_id == current_counsellor.id %>
+                        <% chatroom = ClientChatroom.find_by(user_id: appointment.user_id, counsellor_id: appointment.counsellor_id) %>
+                        <% if chatroom.present? %>
+                          <%= link_to 'Your Chatroom', client_chatroom_path(chatroom), class: "btn-accept" %>
+                        <% else %>
+                          <%= button_to 'Create Chatroom', client_chatrooms_path(user_id: appointment.user_id, counsellor_id: appointment.counsellor_id), method: :post, class: "btn-accept" %>
+                        <% end %>
+                      <% end %>
+                      <%= button_to 'Delete', appointment_path(appointment), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn-accept' %>
+                    </div>
+                  </li>
+                </ul>
+                <div class="appointment-card-details">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+
+    <button class="carousel-control-prev-counsellor" type="button" data-bs-target="#carouselOnGoingAppointments" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next-counsellor" type="button" data-bs-target="#carouselOnGoingAppointments" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+
+
+<!-- app/views/psychologists/show.html.erb -->
+<h1><%= @psychologist.name %>'s Profile</h1>
+<p>Email: <%= @psychologist.email %></p>
+<p>Specialization: <%= @psychologist.specialization %></p>
+<p>Bio: <%= @psychologist.bio %></p>
+
+<h2>Appointments</h2>
+<ul>
+  <% @appointments.each do |appointment| %>
+    <li>
+      <%= appointment.start_time %> - <%= appointment.end_time %>
+      <% if appointment.patient %>
+        with <%= appointment.patient.name %>
+      <% end %>
+      <%= link_to 'Edit', edit_appointment_path(appointment) %>
+      <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'New Appointment Slot', new_appointment_path %>

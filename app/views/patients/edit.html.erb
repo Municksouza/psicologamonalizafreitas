@@ -1,0 +1,10 @@
+<%= simple_form_for @patient, url: patient_path(@patient), method: :put do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name %>
+  <%= f.input :email %>
+  <%= f.input :password, required: false %>
+  <%= f.input :password_confirmation, required: false %>
+
+  <%= f.submit "Atualizar", class: "btn btn-primary" %>
+<% end %>

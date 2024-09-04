@@ -1,11 +1,5 @@
 <h1>Edit Appointment</h1>
 
-<%= simple_form_for @appointment do |form| %>
-  <div>
-    <%= form.input :date, as: :datetime %>
-  </div>
+<%= render 'form', appointment: @appointment %>
 
-  <div>
-    <%= form.button :submit, "Update Appointment" %>
-  </div>
-<% end %>
+<%= link_to 'Back', appointments_path %>

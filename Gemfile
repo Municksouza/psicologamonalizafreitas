@@ -36,6 +36,15 @@ gem "bootsnap", require: false
 
 gem "devise"
 gem "simple_form"
+gem "fullcalendar-rails"
+gem "actioncable"
+gem 'cloudinary'
+gem "font-awesome-sass", "~> 6.1"
+gem "sassc-rails"
+gem 'jquery-rails'
+gem 'activestorage'
+
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -49,6 +58,7 @@ group :development, :test do
   gem "rspec-rails", "~> 6.1"
   gem "capybara", "~> 3.36"
   gem "database_cleaner-active_record"
+  gem 'dotenv-rails'
 end
 
 group :development do

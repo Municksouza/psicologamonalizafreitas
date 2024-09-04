@@ -1,0 +1,2 @@
+module Psychologists::SessionsHelper
+end

@@ -1,0 +1,37 @@
+<!-- app/views/testimonials/_index.html.erb -->
+<div id="testimonialCarousel" class="carousel slide">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <% if @testimonials.present? %>
+      <% @testimonials.each_with_index do |testimonial, index| %>
+        <li data-bs-target="#testimonialCarousel" data-bs-slide-to="<%= index %>" class="<%= 'active' if index.zero? %>"></li>
+      <% end %>
+    <% end %>
+  </ol>
+
+  <!-- Carousel Items -->
+<div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-inner-testimonial">
+    <% if @testimonials.present? %>
+      <% @testimonials.each_with_index do |testimonial, index| %>
+        <div class="carousel-item <%= 'active' if index.zero? %>">
+          <div class="card">
+            <img src="<%= testimonial.patient.photo_url %>" class="card-img-top" alt="<%= testimonial.patient.name %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= testimonial.patient.name %></h5>
+              <p class="card-text"><%= testimonial.content %></p>
+              <% if user_signed_in? %>
+                <% if current_user == testimonial.patient || current_user.psychologist? %>
+                  <%= link_to 'Edit', edit_testimonial_path(testimonial), class: 'btn btn-primary' %>
+                  <%= link_to 'Delete', testimonial_path(testimonial), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No testimonials available.</p>
+    <% end %>
+  </div>
+</div>

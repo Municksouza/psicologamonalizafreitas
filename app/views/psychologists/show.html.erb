@@ -1,0 +1,19 @@
+# <%= simple_form_for @psychologist, url: psychologist_path(@psychologist), method: :put do |f| %>
+#   <%= f.error_notification %>
+
+#   <%= f.input :email %>
+#   <%= f.input :password, required: false %>
+#   <%= f.input :password_confirmation, required: false %>
+#   <%= f.button :submit %>
+# <% end %>
+
+
+
+<!-- app/views/psychologists/show.html.erb -->
+<h1><%= @psychologist.name %>'s Profile</h1>
+<p>Email: <%= @psychologist.email %></p>
+<p>Specialization: <%= @psychologist.specialization %></p>
+<p>Bio: <%= @psychologist.bio %></p>
+
+<h2>Appointments</h2>
+<%= render 'appointments/index' %>

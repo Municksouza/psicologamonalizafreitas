@@ -1,0 +1,58 @@
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="container-fluid">
+    <%= link_to root_path, class: 'navbar-brand' do %>
+      <%= image_tag 'logo.png', class: 'logo-nav ms-3' %>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Ícones das redes sociais -->
+        <li class="nav-item me-3">
+        <a href="https://facebook.com" target="_blank" class="nav-link"><i class="fab fa-facebook"></i></a>
+        </li>
+        <li class="nav-item me-3">
+        <a href="https://wa.me/+5584991887551" target="_blank" class="nav-link"><i class="fab fa-whatsapp"></i></a>
+        </li>
+        <li class="nav-item me-3">
+        <a href="https://instagram.com" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
+        </li>
+
+        <% if patient_signed_in? %>
+          <li class="nav-item dropdown">
+            <img class="avatar dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="rounded-circle" src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" />
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <div class="dropdown-header">
+                <%= link_to "Minha Conta", profile_patient_path(current_patient), class: "dropdown-item" %>
+                <%= link_to "Editar Perfil", edit_patient_password_path(current_patient), class: "dropdown-item" %>
+                <%= form_with url: destroy_patient_session_path, method: :delete, class: 'd-inline' do %>
+                  <%= submit_tag 'Sair', class: 'btn btn-link' %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% elsif psychologist_signed_in? %>
+          <li class="nav-item dropdown">
+            <img class="avatar dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="<%= current_psychologist.photo.attached? ? cl_image_path(current_psychologist.photo.key) : asset_path('monaliza.png') %>" />
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Monaliza Profile", profile_psychologist_path(current_psychologist), class: "dropdown-item" %>
+              <%= link_to "Editar sua conta", edit_psychologist_registration_path, class: "dropdown-item" %>
+              <%= link_to "Sair", destroy_psychologist_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item dropdown">
+            <a class="dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Entrar
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+              <li><%= link_to "Paciente", new_patient_session_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Monaliza Freitas", new_psychologist_session_path, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="col-md-4 mb-4">
+  <div class="card-previous-appointments d-flex align-items-center">
+    <div class="appointment-card-header d-flex align-items-center">
+      <% if appointment.counsellor %>
+        <% if appointment.counsellor.photo.attached? %>
+          <%= image_tag cl_image_path(appointment.counsellor.photo.key), alt: 'Counsellor Photo', class: 'image-1' %>
+        <% else %>
+          <%= image_tag asset_path('default_profile.png'), alt: 'Default Profile Photo', class: 'image-1' %>
+        <% end %>
+      <% end %>
+      <div class="card-appointments">
+        <p><i class="fa-solid fa-user-doctor"></i> <%= appointment.counsellor&.fullname %></p>
+        <p><i class="fa-solid fa-calendar-days"></i> <%= appointment.schedule_time.strftime("%B %d, %Y at %I:%M %p") %><br /></p>
+        <p><i class="fa-solid fa-head-side-virus"></i> <%= appointment.symptom %></p>
+        <%= link_to appointment_path(appointment), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+      <i class="fa-sharp fa-solid fa-trash"></i>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>

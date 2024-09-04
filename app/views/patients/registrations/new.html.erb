@@ -1,0 +1,65 @@
+<div class="gold-banner mb-5">
+    <div class="banner-title">
+        <h1>Crie sua Conta aqui</h1>
+    </div>
+</div>
+
+<div class="container min-vh-100">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-6">
+            <div class="form-login text-center py-4">
+                <h2 class="card-title text-center">Seus Dados</h2>
+
+                <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "my-4" }) do |f| %>
+                    <%= f.error_notification %>
+
+                    <div class="form-inputs">
+                        <%= f.input :email,
+                                    label: "Email",
+                                    required: true,
+                                    autofocus: true,
+                                    input_html: { autocomplete: "email", class: "form-control mb-3" } %>
+                        <%= f.input :full_name,
+                                    label: "Nome Completo",
+                                    required: true,
+                                    input_html: { autocomplete: "full_name", class: "form-control mb-3" } %>
+                        <%= f.input :address,
+                                    label: "Endereço",
+                                    required: true,
+                                    input_html: { class: "form-control mb-3", placeholder: "Digite seu endereço"  } %>
+                        <%= f.input :phone_number,
+                                    label: "Telefone para Contato",
+                                    required: true,
+                                    input_html: { class: "form-control mb-3", placeholder: "Digite seu número de telefone" } %>
+                        <%= f.input :date_of_birth,
+                                    as: :date,
+                                    label: "Data de Nascimento",
+                                    required: true,
+                                    start_year: 1900,   # Ajusta o ano inicial
+                                    end_year: Date.today.year,  # Ajusta o ano final
+                                    input_html: { class: "form-control mb-3" } %>
+                        <%= f.input :photo, as: :file,
+                                    label: "Foto",
+                                    required: true,
+                                    input_html: { class: "form-control mb-3" } %>
+                        <%= f.input :password,
+                                    label: "Senha",
+                                    required: true,
+                                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                                    input_html: { autocomplete: "Senha", class: "form-control mb-3" } %>
+                        <%= f.input :password_confirmation,
+                                    label: "Confirmação de Senha",
+                                    required: true,
+                                    input_html: { autocomplete: "new-password", class: "form-control mb-3" } %>
+                    </div>
+
+                    <div class="form-actions">
+                        <%= f.button :submit, "Criar Conta", class: "booking-btn" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%= render "patients/shared/links" %>
