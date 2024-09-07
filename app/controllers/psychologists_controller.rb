@@ -35,6 +35,6 @@ class PsychologistsController < ApplicationController
   end
 
   def psychologist_params
-    params.require(:psychologist).permit(:name, :email, :photo, :phone_number, :other_attributes)
+    params.require(:psychologist).permit(:full_name, :email, :photo, :phone_number, :other_attributes)
   end
 end

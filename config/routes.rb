@@ -18,24 +18,21 @@ Rails.application.routes.draw do
 
   # Additional pages
   get "signup_page", to: "pages#signup_page", as: :signup_page
+  get 'appointments/index_json', to: 'appointments#index_json', as: :appointments_json
 
-  # Nested resources for patients and psychologists
+  # Patient and Psychologist routes for appointments
   resources :patients, only: [:show, :edit, :update, :destroy] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update]
+    resources :appointments, only: [:index, :new, :create, :edit, :update] do
+      member do
+        delete :cancel # Custom route for patients to cancel their appointment
+      end
+    end
     resources :messages, only: [:create, :destroy]
   end
 
   resources :psychologists, only: [:show, :edit, :update, :destroy] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update]
+    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy]
     resources :messages, only: [:create, :destroy]
-  end
-
-  # General appointments routes
-  resources :appointments, only: [:index, :show, :edit, :update, :destroy] do
-    member do
-      patch :book
-      patch :cancel
-    end
   end
 
   # Testimonials routes
@@ -45,7 +42,4 @@ Rails.application.routes.draw do
   get 'calendar', to: 'calendar#index'
   get 'contacts/new'
   post 'contacts/create'
-
-  match '*path', to: 'pages#home', via: :all
-
 end

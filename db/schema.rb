@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_03_220053) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_06_004056) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -42,11 +42,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_220053) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "psychologist_id", null: false
-    t.integer "patient_id", null: false
+    t.integer "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.time "time"
     t.integer "status", default: 0, null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
     t.index ["psychologist_id"], name: "index_appointments_on_psychologist_id"
   end
@@ -101,6 +103,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_03_220053) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "online", default: false
+    t.string "full_name"
+    t.string "phone_number"
     t.index ["email"], name: "index_psychologists_on_email", unique: true
     t.index ["reset_password_token"], name: "index_psychologists_on_reset_password_token", unique: true
   end

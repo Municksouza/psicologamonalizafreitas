@@ -1,6 +1,7 @@
 class SessionsController < Devise::SessionsController
   after_action :broadcast_online_status, only: :create
   after_action :broadcast_offline_status, only: :destroy
+  
 
   private
 

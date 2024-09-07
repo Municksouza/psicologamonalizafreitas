@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
   validates :end_time, presence: true
   validate :end_after_start
 
-  enum status: { available: 0, booked: 1, canceled: 2 }
+  enum :status, [:available, :booked, :canceled]
 
   # Custom validation method to ensure end time is after start time
   def end_after_start
@@ -14,6 +14,21 @@ class Appointment < ApplicationRecord
 
     if end_time <= start_time
       errors.add(:end_time, "must be after the start time")
+    end
+  end
+  def formatted_time_slot
+    if start_time.present? && end_time.present?
+      "#{start_time.strftime('%d-%m-%Y %H:%M')} - #{end_time.strftime('%H:%M')}"
+    else
+      "Time not set"
+    end
+  end
+
+  def title_for_calendar
+    if patient
+      "Booked with #{patient.full_name}"
+    else
+      "Available Slot"
     end
   end
 end

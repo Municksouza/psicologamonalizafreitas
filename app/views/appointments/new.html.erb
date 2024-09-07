@@ -1,15 +1,16 @@
-# <h1>New Appointment</h1>
+<h1>Book an Available Appointment</h1>
 
-# <%= render 'form', appointment: @appointment %>
+<% if @available_appointments.any? %>
+  <!-- Initialize the form to create a booking -->
+  <%= simple_form_for :appointment_booking, url: patient_appointments_path(current_patient), method: :post do |f| %>
+    <div class="form-group">
+      <%= f.label :appointment_id, "Available Time Slots" %>
+      <!-- Ensure the appointment_id is passed correctly -->
+      <%= f.collection_select :appointment_id, @available_appointments, :id, :formatted_time_slot, prompt: "Select an available time slot" %>
+    </div>
+    <%= f.submit "Book This Appointment", class: 'btn btn-primary' %>
+  <% end %>
+<% else %>
+  <p>No available appointments at the moment.</p>
+<% end %>
 
-# <%= link_to 'Back', appointments_path %>
-
-
-# <!-- app/views/appointments/new.html.erb -->
-# <h1>New Appointment Slot</h1>
-# <%= simple_form_for([current_psychologist, @appointment]) do |f| %>
-#   <%= f.input :start_time, as: :datetime_local_field %>
-#   <%= f.input :end_time, as: :datetime_local_field %>
-#   <%= f.input :details %>
-#   <%= f.submit "Create Appointment Slot" %>
-# <% end %>

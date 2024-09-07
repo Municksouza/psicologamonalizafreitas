@@ -15,7 +15,7 @@
         </div>
       <div class="col-md-8">
         <p><strong>Email:</strong> <%= @counsellor.email %></p>
-        <p><strong>Full Name:</strong> <%= @counsellor.fullname %></p>
+        <p><strong>Full Name:</strong> <%= @counsellor.full_name %></p>
         <p><strong>Gender:</strong> <%= @counsellor.gender %></p>
         <p><strong>Location:</strong> <%= @counsellor.location %></p>
         <p><strong>Date of Birth:</strong> <%= @counsellor.birthdate.strftime("%B %d, %Y") if @counsellor.birthdate %></p>
@@ -83,7 +83,7 @@
                       <% end %>
                       <div class="card-previous-appointments d-flex justify-content-center">
                         <div class="card-body-counsellor">
-                          <h5 class="card-title"><strong><%= appointment.user.fullname %></strong></h5>
+                          <h5 class="card-title"><strong><%= appointment.user.full_name %></strong></h5>
                           <p class="card-text"><strong><%= appointment.symptom %></strong></p>
                           <strong>Schedule Time:</strong>
                           <%= appointment.schedule_time.strftime("%B %d, %Y at %I:%M %p") %>
@@ -126,7 +126,7 @@
 
 
 <!-- app/views/psychologists/show.html.erb -->
-<h1><%= @psychologist.name %>'s Profile</h1>
+<h1><%= @psychologist.full_name %>'s Profile</h1>
 <p>Email: <%= @psychologist.email %></p>
 <p>Specialization: <%= @psychologist.specialization %></p>
 <p>Bio: <%= @psychologist.bio %></p>
@@ -137,7 +137,7 @@
     <li>
       <%= appointment.start_time %> - <%= appointment.end_time %>
       <% if appointment.patient %>
-        with <%= appointment.patient.name %>
+        with <%= appointment.patient.full_name %>
       <% end %>
       <%= link_to 'Edit', edit_appointment_path(appointment) %>
       <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>

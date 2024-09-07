@@ -1,18 +1,56 @@
-.calendar-container {
-  max-width: 800px;
+#calendar {
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-.fc-header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  background-color: #f5f5f5;
+/* Estilização geral do calendário */
+.fc {
+  font-family: Arial, sans-serif; /* Fonte do calendário */
+  margin: 40px auto; /* Centraliza o calendário */
+  width: 90%; /* Largura do calendário */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra para destacar o calendário */
+  border-radius: 8px; /* Bordas arredondadas */
+  overflow: hidden; /* Esconde qualquer conteúdo que ultrapasse as bordas */
 }
 
-.fc-daygrid-event {
-  background-color: #1e88e5;
-  color: #fff;
-  border: none;
-  padding: 5px;
+/* Cabeçalho do calendário */
+.fc-toolbar {
+  background-color: #0056b3; /* Cor de fundo do cabeçalho */
+  color: white; /* Cor do texto do cabeçalho */
+  padding: 10px 16px; /* Espaçamento interno do cabeçalho */
+}
+
+/* Botões do cabeçalho */
+.fc button {
+  background-color: #007bff; /* Cor de fundo dos botões */
+  color: white; /* Cor do texto dos botões */
+  border: none; /* Remove as bordas */
+  padding: 8px 12px; /* Espaçamento interno dos botões */
+  margin-right: 8px; /* Espaçamento entre os botões */
+  border-radius: 4px; /* Bordas arredondadas dos botões */
+  cursor: pointer; /* Cursor em formato de ponteiro */
+}
+
+.fc button:hover {
+  background-color: #0056b3; /* Cor de fundo dos botões ao passar o mouse */
+}
+
+/* Dias do calendário */
+.fc .fc-daygrid-day {
+  border: 1px solid #ddd; /* Bordas dos dias */
+}
+
+/* Eventos no calendário */
+.fc .fc-event {
+  color: black; /* Cor do texto dos eventos */
+  border: 1px solid black; /* Bordas dos eventos */
+  background-color: #ffcc00; /* Cor de fundo dos eventos */
+  border-radius: 4px; /* Bordas arredondadas dos eventos */
+  padding: 2px 5px; /* Espaçamento interno dos eventos */
+}
+
+/* Hoje destacado */
+.fc .fc-day-today {
+  background-color: #e2e3e5; /* Cor de fundo do dia atual */
+  border-color: #ffc107; /* Cor da borda do dia atual */
 }

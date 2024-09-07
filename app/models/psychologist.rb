@@ -9,7 +9,7 @@ class Psychologist < ApplicationRecord
   has_many :messages, as: :sendable, dependent: :destroy
   has_one_attached :photo
 
-  validates :name, :email, presence: true
+  validates :full_name, :email, :phone_number, presence: true
   # Check if the psychologist is online (based on online column)
   def online?
     self.online

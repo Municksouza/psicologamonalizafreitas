@@ -2,19 +2,18 @@
   <div class="card bg-light appointment-card">
     <div class="card-body">
       <p class="card-text"><strong>Time:</strong> <%= appointment.schedule_time.strftime("%B %d, %Y at %I:%M %p") %></p>
-      <p class="card-text"><strong>Symptom:</strong> <%= appointment.symptom %></p>
       <p class="card-text"><strong>Confirmed:</strong> <%= appointment.confirmation ? 'Yes' : 'No' %></p>
           <% if appointment.confirmation == true %>
-              <% chatroom = ClientChatroom.find_by(user_id: appointment.user_id, counsellor_id: appointment.counsellor_id) %>
-            <% if chatroom.present? %>
-              <%= link_to 'Your Chatroom', client_chatroom_path(chatroom), class: "btn btn-lg" %>
+              <% message = PatientChatroom.find_by(patient_id: appointment.patient_id, psychologist_id: appointment.psychologist_id) %>
+            <% if message.present? %>
+              <%= link_to 'Your Chatroom',   patient_messages_path(message), class: "btn btn-lg" %>
             <% else %>
-              <%= button_to 'Create Chatroom', client_chatrooms_path(user_id: appointment.user_id, counsellor_id: appointment.counsellor_id), method: :post, class: "btn btn-lg" %>
+              <%= button_to 'Create Chatroom', patient_messages_path(patient_id: appointment.patient_id, psychologist_id: appointment.psychologist_id), method: :post, class: "btn btn-lg" %>
             <% end %>
           <% end %>
     </div>
     <div class="card-footer d-flex justify-content-between">
-      <%= link_to 'Edit', edit_appointment_path(appointment) %>
+      <%= link_to 'Edit',  edit_patient_appointment(appointment) %>
       <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn-wrap', style: 'margin-left: 5px;' %>
     </div>
   </div>

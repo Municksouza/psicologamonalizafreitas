@@ -1,11 +1,11 @@
 .patient-page {
-  background-color: #f0f0f0; /* Cor de fundo neutra */
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
   padding: 20px;
   font-family: "Inknut Antiqua";
 }
 
 .patient-header {
-  background: linear-gradient(90deg, #FFD700 0%, #F5DEB3 100%); /* Gradiente dourado */
+  background: linear-gradient(90deg, #F5DEB3 100%, #FFD700 0%); /* Gradiente dourado */
   padding: 30px;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -33,11 +33,11 @@
 }
 
 .appointments-section, .testimonials-section, .previous-appointments-section {
-  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
 }
 
 .appointments-section h2, .testimonials-section h2, .previous-appointments-section h2 {
@@ -60,7 +60,7 @@
 
 .carousel-inner {
   padding: 20px;
-  background: #fff;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

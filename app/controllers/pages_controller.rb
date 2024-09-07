@@ -27,6 +27,11 @@ class PagesController < ApplicationController
     end
   end
 
+  def signup_page
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :full_name, :phone_number, :address, :date_of_birth, :photo])
+  end
+
+
   private
 
   def authenticate_patient_or_psychologist!

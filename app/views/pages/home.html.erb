@@ -27,20 +27,19 @@
                 <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
               </p>
             <% end %>
-            <%= link_to 'New Appointment Slot', new_appointment_path, class: "booking-btn" %>
-
+            <%= link_to 'New Appointment Slot', new_appointment_path, class: "booking-btn"%>
           <% elsif patient_signed_in? %>
             <!-- List available appointments for the patient -->
             <% @appointments.each do |appointment| %>
               <% if appointment.status == 'available' %>
                 <p>
                   <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %> - <%= appointment.end_time.strftime("%B %d, %Y %H:%M") %>
-                  <%= link_to 'Marque sua Consulta', book_appointment_path(appointment), method: :patch, class: "booking-btn" %>
+                  <%= link_to 'Marque sua Consulta', new_patient_session_path(@appointment), method: :patch, class: "booking-btn" %>
                 </p>
               <% end %>
             <% end %>
           <% else %>
-            <%= link_to "Marque sua consulta", new_patient_session_path, class: "booking-btn" %>
+            <%= link_to "Marque sua consulta",  new_patient_registration_path, class: "booking-btn" %>
           <% end %>
         </div>
       </div>

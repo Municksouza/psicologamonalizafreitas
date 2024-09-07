@@ -1,62 +1,89 @@
-# <h1>Appointment Calendar</h1>
-# <div id='calendar'></div>
+<h1>Appointments</h1>
 
-# <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.2/main.min.js'></script>
-# <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.2/main.min.js'></script>
-# <script>
-#   document.addEventListener('DOMContentLoaded', function() {
-#     var calendarEl = document.getElementById('calendar');
-#     var calendar = new FullCalendar.Calendar(calendarEl, {
-#       plugins: [ 'dayGrid' ],
-#       events: <%= raw @appointments.to_json %>
-#     });
-#     calendar.render();
-#   });
-# </script>
+<!-- Div para o calendário -->
+<div id="calendar"></div>
 
-# <!-- app/views/appointments/index.html.erb -->
-# <h1>Available Appointments</h1>
-# <% if psychologist_signed_in? %>
-#   <!-- List appointments created by the psychologist -->
-#   <% @appointments.each do |appointment| %>
-#     <%= appointment.start_time %> - <%= appointment.end_time %>
-#     <%= link_to 'Edit', edit_appointment_path(appointment) %>
-#     <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
-#   <% end %>
-#   <%= link_to 'New Appointment Slot', new_appointment_path %>
-# <% elsif patient_signed_in? %>
-#   <!-- List available appointment slots for patients to book -->
-#   <% @appointments.each do |appointment| %>
-#     <% if appointment.patient_id.nil? %> <!-- Show only unbooked slots -->
-#       <%= appointment.start_time %> - <%= appointment.end_time %>
-#       <%= form_with(model: appointment, url: appointment_path(appointment), method: :patch) do |f| %>
-#         <%= hidden_field_tag :appointment_id, appointment.id %>
-#         <%= f.submit "Book This Appointment" %>
-#       <% end %>
-#     <% else %>
-#       Booked by: <%= appointment.patient.name %>
-#     <% end %>
-#   <% end %>
-# <% end %>
+<div class="appointments-section">
+  <!-- Psychologists view -->
+  <% if psychologist_signed_in? %>
+    <h2>Your Booked Appointments</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Patient</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @appointments.any? %>
+          <% @appointments.each do |appointment| %>
+            <% if appointment.patient.present? %> <!-- Show only booked appointments -->
+              <tr>
+                <td><%= appointment.start_time.strftime("%d-%m-%Y %H:%M") %></td>
+                <td><%= appointment.end_time.strftime("%d-%m-%Y %H:%M") %></td>
+                <td><%= appointment.patient.full_name %></td>
+                <td>
+                  <%= link_to 'Edit', edit_appointment_path(appointment), class: 'btn btn-warning' %>
+                  <%= link_to 'Delete', psychologist_appointment_path(current_psychologist, appointment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% else %>
+          <tr><td colspan="4">No booked appointments</td></tr>
+        <% end %>
+      </tbody>
+    </table>
 
+    <h2>Create New Appointment Slot</h2>
+    <%= link_to 'Create New Appointment Slot', new_appointment_path, class: 'btn btn-success' %>
 
+  <% elsif patient_signed_in? %>
+    <!-- Patients view -->
+    <h2>Your Booked Appointments</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Psychologist</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @booked_appointments.any? %>
+          <% @booked_appointments.each do |appointment| %>
+            <tr>
+              <td><%= appointment.start_time.strftime("%d-%m-%Y %H:%M") %></td>
+              <td><%= appointment.end_time.strftime("%d-%m-%Y %H:%M") %></td>
+              <td><%= appointment.psychologist.full_name %></td>
+              <td>
+                <%= button_to 'Delete', cancel_patient_appointment_path(patient_id: current_patient.id, id: appointment.id),
+                      method: :delete,
+                      data: { confirm: "Are you sure you want to delete this appointment?" },
+                      class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr><td colspan="4">No booked appointments</td></tr>
+        <% end %>
+      </tbody>
+    </table>
 
-# <!-- app/views/appointments/index.html.erb -->
-# <h1>Available Appointments</h1>
-
-# <!-- Loop through each appointment and display its details -->
-# <% @appointments.each do |appointment| %>
-#   <p>
-#     <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %> - <%= appointment.end_time.strftime("%B %d, %Y %H:%M") %>
-
-#     <!-- Book appointment button for patients -->
-#     <% if patient_signed_in? && appointment.status == 'available' %>
-#       <%= link_to 'Marque sua Consulta', book_appointment_path(appointment), method: :patch, class: "booking-btn" %>
-#     <% end %>
-
-#     <!-- New appointment button for psychologists -->
-#     <% if psychologist_signed_in? %>
-#       <%= link_to 'Marque uma Consulta', new_appointment_path, class: "booking-btn" %>
-#     <% end %>
-#   </p>
-# <% end %>
+    <h2>Available Appointments</h2>
+    <% if @available_appointments.any? %>
+      <%= simple_form_for @appointment, url: patient_appointments_path(current_patient), method: :post do |f| %>
+        <div class="form-group">
+          <%= f.label :available_appointments, "Available Time Slots" %>
+          <%= f.collection_select :id, @available_appointments, :id, :formatted_time_slot, prompt: "Select an available time slot" %>
+        </div>
+        <%= f.submit "Book This Appointment", class: 'btn btn-primary' %>
+      <% end %>
+    <% else %>
+      <tr><td colspan="4">No available appointments at the moment</td></tr>
+    <% end %>
+  <% end %>
+</div>
