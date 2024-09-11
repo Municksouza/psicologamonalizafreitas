@@ -1,0 +1,50 @@
+/* Ajuste de espaçamento no Carousel */
+.carousel-home {
+  margin-top: 100px; /* Adiciona mais espaço acima do carousel */
+  margin-bottom: 100px; /* Espaçamento já existente abaixo */
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ocupa toda a altura do contêiner */
+  position: relative;
+}
+
+.carousel-item img {
+  max-width: 50%; /* Garante que a imagem não ultrapasse o contêiner */
+  height: auto;    /* Mantém a proporção da imagem */
+  display: block;  /* Remove o espaço extra abaixo da imagem */
+}
+
+.carousel-inner-home {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Altura total do contêiner */
+  overflow: hidden; /* Oculta conteúdo excedente */
+  margin-top: 5%; /* Ajuste do espaçamento superior */
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  background-size: cover; /* Garante que a imagem de fundo cubra o contêiner */
+  background-position: center; /* Centraliza a imagem de fundo */
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+  .carousel-item img {
+    max-width: 80%; /* Ajusta o tamanho da imagem para telas menores */
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-home {
+    margin-top: 50px;  /* Espaçamento menor em telas menores */
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-item img {
+    max-width: 100%; /* Ajusta o tamanho da imagem para telas muito pequenas */
+  }
+}

@@ -1,0 +1,127 @@
+/* Estilo do formulário de inscrição */
+.form-login {
+  background: linear-gradient(90deg, #F0F0F0 0%, #F5DEB3 100%);
+  color: blue;
+  font-family: "Inknut Antiqua";
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-width: 600px; /* Limit width on larger screens */
+  margin: 20px auto; /* Center horizontally on larger screens */
+}
+
+.form-login h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-inputs {
+  margin-bottom: 20px;
+}
+
+.form-inputs input[type="text"],
+.form-inputs input[type="email"],
+.form-inputs input[type="password"],
+.form-inputs input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  font-family: "Inknut Antiqua";
+}
+
+.form-inputs input[type="file"] {
+  padding: 3px;
+}
+
+.form-actions {
+  text-align: center;
+}
+
+.form-actions .btn:hover {
+  background-color: blue; /* Slightly darker green on hover */
+}
+
+/* Estilo para o link no rodapé */
+.links {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.links a {
+  color: #007D6E;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .form-login {
+    padding: 20px;
+    max-width: 100%; /* Ensure full width on smaller screens */
+    margin: 10px;
+  }
+
+  .form-login h2 {
+    font-size: 20px; /* Smaller font size on smaller screens */
+  }
+
+  .form-inputs input[type="text"],
+  .form-inputs input[type="email"],
+  .form-inputs input[type="password"],
+  .form-inputs input[type="file"] {
+    padding: 8px; /* Adjust padding for smaller screens */
+    font-size: 14px; /* Smaller font size on smaller screens */
+  }
+
+  .form-actions .btn {
+    padding: 10px 20px; /* Adjust button padding for smaller screens */
+  }
+
+  .links {
+    margin-top: 20px;
+  }
+
+  .links a {
+    font-size: 14px; /* Smaller font size for links on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-login {
+    padding: 15px;
+    margin: 5px;
+  }
+
+  .form-login h2 {
+    font-size: 18px; /* Further reduce font size on very small screens */
+  }
+
+  .form-inputs input[type="text"],
+  .form-inputs input[type="email"],
+  .form-inputs input[type="password"],
+  .form-inputs input[type="file"] {
+    padding: 6px; /* Further adjust padding on very small screens */
+    font-size: 12px; /* Further reduce font size on very small screens */
+  }
+
+  .form-actions .btn {
+    padding: 8px 16px; /* Further adjust button padding on very small screens */
+  }
+
+  .links {
+    margin-top: 15px;
+  }
+
+  .links a {
+    font-size: 12px; /* Further reduce font size for links on very small screens */
+  }
+}

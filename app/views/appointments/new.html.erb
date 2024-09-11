@@ -1,11 +1,8 @@
-<h1>New Appointment</h1>
+<div id="calendar"></div>
+<%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
 
-<%= simple_form_for @appointment do |form| %>
-  <div>
-    <%= form.input :date, as: :datetime %>
-  </div>
-
-  <div>
-    <%= form.button :submit, "Create Appointment" %>
-  </div>
+<% if psychologist_signed_in? %>
+  <h1>Create New Appointment Slots</h1>
+<% elsif patient_signed_in? %>
+  <h1>Book Available Appointments</h1>
 <% end %>

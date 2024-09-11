@@ -1,0 +1,8 @@
+<%= simple_form_for @patient, url: patient_registration_path, method: :put do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :email %>
+  <%= f.input :password, required: false %>
+  <%= f.input :password_confirmation, required: false %>
+  <%= f.button :submit %>
+<% end %>

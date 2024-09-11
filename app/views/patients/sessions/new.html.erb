@@ -1,0 +1,72 @@
+<div class="container min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+      <div class="form-login text-center me-5 py-4" style="background-color: #ffffff; color: #28697E; font-family: 'Alegreya', serif;">
+        <h2 class="card-title text-center">Log in</h2>
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-inputs">
+          <%= f.input :email,
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "email" } %>
+          <%= f.input :password,
+                required: false,
+                input_html: { autocomplete: "current-password" } %>
+          <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        </div>
+        <div class="form-actions">
+          <%= f.button :submit, "Log in" %>
+        </div>
+        <% end %>
+        <%= render "patients/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- app/views/patients/sessions/new.html.erb -->
+<h1>Patient Sign In</h1>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Log in", class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<div id="login-form-container">
+  <!-- Your login form here -->
+</div>
+
+<button id="login-button" class="btn btn-primary">Load Login Form</button>
+
+<script>
+  $(document).ready(function() {
+    $('#login-button').on('click', function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      $.ajax({
+        url: '/patients/sign_in',
+        type: 'GET', // or POST depending on what you're trying to do
+        dataType: 'html', // Specify that the response format is HTML
+        success: function(response) {
+          // Handle the response here
+          $('#login-form-container').html(response); // Replace with the response content
+        },
+        error: function(xhr, status, error) {
+          console.error('An error occurred: ' + error);
+        }
+      });
+    });
+  });
+</script>
+

@@ -1,0 +1,18 @@
+<div class="col-md-6 mb-4 <%= 'active' if index == 0 %>">
+  <div class="card-previous-appointments">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="card-appointments flex-grow-1">
+          <% if appointment.user.photo.attached? %>
+            <%= image_tag cl_image_path(appointment.user.photo.key), alt: 'Profile Photo', class: 'img-fluid img-counsellor' %>
+          <% else %>
+            <%= image_tag asset_path('counsellor.png'), alt: 'Default Profile Photo', class: 'img-fluid img-counsellor' %>
+          <% end %>
+          <%= render 'counsellors/appointment_accept', appointment: appointment %>
+        </div>
+      </li>
+    </ul>
+    <div class="appointment-card-details">
+    </div>
+  </div>
+</div>

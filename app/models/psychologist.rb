@@ -6,10 +6,12 @@ class Psychologist < ApplicationRecord
 
   has_many :patients, dependent: :destroy
   has_many :appointments, dependent: :destroy
-  has_many :messages, dependent: :destroy
+  has_many :messages, as: :sendable, dependent: :destroy
+  has_one_attached :photo
 
-  # Method to check who is online
+  validates :full_name, :email, :phone_number, presence: true
+  # Check if the psychologist is online (based on online column)
   def online?
-    !last_sign_out_at.present? || last_sign_out_at < 15.minutes.ago
+    self.online
   end
 end

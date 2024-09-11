@@ -1,0 +1,96 @@
+/* Navbar Styles */
+.navbar {
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  padding: 5px 0; /* Reduce vertical padding */
+  box-shadow: 0px 2px 2px 0px rgb(54, 54, 203); /* Reduce shadow */
+
+  .navbar-brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center items vertically */
+    width: 100%;
+    gap: 10px; /* Reduce gap between elements */
+  }
+
+  @media (max-width: 991px) {
+    .navbar-brand {
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+  }
+
+  .navbar-nav {
+    display: flex;
+    gap: 10px; /* Reduce gap between menu items */
+    font-size: 18px; /* Adjust font size */
+    color: var(--txt, #1a1a1a);
+    font-weight: 700;
+    white-space: nowrap;
+    margin: auto 0;
+  }
+
+  @media (max-width: 991px) {
+    .navbar-nav {
+      font-size: 16px; /* Smaller font size on small screens */
+      white-space: normal; /* Allow wrapping */
+    }
+  }
+
+  .img {
+    aspect-ratio: 1.14;
+    object-fit: auto;
+    object-position: center;
+    width: 40px; /* Reduce image width */
+    mix-blend-mode: darken;
+  }
+
+  @media (max-width: 991px) {
+    .avatar-dropdown-toggle {
+      white-space: normal; /* Allow wrapping */
+      padding: 0 10px; /* Reduce horizontal padding */
+    }
+  }
+
+  .nav-link {
+    display: inline-flex;
+    padding: 8px 16px; /* Reduce padding */
+    align-items: center;
+    gap: 6px; /* Reduce gap */
+  }
+
+  .dropdown-toggle {
+    display: inline-flex;
+    padding: 8px 16px; /* Reduce padding */
+    align-items: center;
+    gap: 6px; /* Reduce gap */
+    background: #FFD050;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25); /* Reduce shadow */
+    color: var(--Black, #232536);
+    font-family: 'Inknut Antiqua', serif;
+    font-size: 16px; /* Reduce font size */
+    line-height: 20px; /* Adjust line-height */
+  }
+
+  .navbar-brand .logo {
+    max-height: 24px; /* Reduce logo max height */
+    width: auto;
+  }
+
+  .nav-item {
+    margin-right: 0.5rem; /* Reduce spacing between items */
+  }
+
+  .logo-nav {
+    width: 80px; /* Reduce logo width */
+    height: 60px; /* Reduce logo height */
+    flex-shrink: 0;
+  }
+}
+
+/* Avatar Styles */
+.avatar {
+  width: auto; /* Adjust width as necessary */
+  height: 50px; /* Adjust height */
+  border-radius: 100%; /* Make the image round */
+  object-fit: cover; /* Ensure proper cropping */
+}

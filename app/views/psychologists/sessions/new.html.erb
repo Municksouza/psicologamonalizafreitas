@@ -1,0 +1,29 @@
+<div class="banner" style="background: linear-gradient(270deg, #007D6E 0%, #5EB47C 100%)">
+  <div class="container">
+    <h1>Log in Counsellor</h1>
+  </div>
+</div>
+<div class="container min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-6">
+      <div class="form-login text-center me-5 py-4" style="background-color: #ffffff; color: #28697E; font-family: 'Alegreya', serif;">
+        <h2 class="card-title text-center">Log in</h2>
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-inputs">
+          <%= f.input :email,
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "email" } %>
+          <%= f.input :password,
+                required: false,
+                input_html: { autocomplete: "current-password" } %>
+          <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        </div>
+            <div class="form-actions">
+              <%= f.button :submit, "Log in" %>
+            </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>

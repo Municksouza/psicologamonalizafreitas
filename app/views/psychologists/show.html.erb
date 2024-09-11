@@ -1,0 +1,13 @@
+<h1>Detalhes do Compromisso</h1>
+
+  <p><strong>Paciente:</strong> <%= @appointment.patient.full_name %></p>
+  <p><strong>Psicólogo:</strong> <%= @appointment.psychologist.full_name %></p>
+  <p><strong>Data/Hora de Início:</strong> <%= @appointment.start_time %></p>
+  <p><strong>Data/Hora de Término:</strong> <%= @appointment.end_time %></p>
+  <p><strong>Status:</strong> <%= @appointment.status %></p>
+
+  <%= link_to 'Voltar', appointments_path %>
+
+  <% if patient_signed_in? && @appointment.patient == current_patient %>
+    <%= link_to 'Cancelar Compromisso', cancel_patient_appointment_path(current_patient, @appointment), method: :delete, data: { confirm: 'Tem certeza?' } %>
+  <% end %>

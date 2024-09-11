@@ -1,0 +1,79 @@
+<div class="patient-page" data-controller="patients" data-patients-userid-value="<%= current_patient.id %>">
+
+  <!-- Section for Profile Information -->
+  <div class="patient-header">
+    <div class="container d-flex align-items-center justify-content-between">
+      <div class="patient-details">
+        <h1 class="welcome-text">Bem-vindo(a), <%= current_patient.full_name %>!</h1>
+        <p>Cuide da sua saúde mental com a nossa plataforma.</p>
+        <div class="personal-info">
+          <p><strong>Email:</strong> <%= @patient.email %></p>
+          <p><strong>Telefone:</strong> <%= @patient.phone_number %></p>
+          <p><strong>Endereço:</strong> <%= @patient.address %></p>
+        </div>
+        <%= link_to 'Alterar Senha', edit_patient_registration_path, class: 'btn btn-primary' %>
+      </div>
+      <div class="patient-picture">
+        <img src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" alt="Profile" class="img-fluid rounded-circle">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section for Appointments -->
+  <div class="appointments-section container">
+    <h2>Seus Compromissos</h2>
+    <% if @appointments.present? %>
+      <div class="appointments-list">
+        <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
+          <div class="appointment-item">
+            <p><strong>Data:</strong> <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %></p>
+            <p><strong>Status:</strong> <%= appointment.status %></p>
+            <!-- Corrigindo o link para detalhes da consulta -->
+            <%= link_to 'Ver Detalhes', patient_appointment_path(current_patient, appointment), class: 'btn btn-info' %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Nenhum compromisso marcado ainda.</p>
+    <% end %>
+
+    <!-- Se houver consulta disponível para marcar -->
+    <% if @appointment.present? %>
+      <%= link_to 'Marcar Consulta', new_patient_appointment_path(@appointment), class: "btn btn-success" %>
+    <% else %>
+      <p>Não há consultas disponíveis para marcar no momento.</p>
+    <% end %>
+  </div>
+
+  <!-- Section for Testimonials -->
+  <div class="testimonials-section container">
+    <h2>Depoimentos</h2>
+    <p>Leia o que outros pacientes têm a dizer sobre nossas consultas:</p>
+    <%= render 'testimonials/index' %>
+  </div>
+
+  <!-- Section for Previous Appointments -->
+  <div class="previous-appointments-section container">
+    <h2>Compromissos Anteriores</h2>
+    <div id="carouselPreviousAppointments" class="carousel slide">
+      <div class="carousel-inner">
+        <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
+          <div class="carousel-item <%= 'active' if index == 0 %>">
+            <div class="appointment-carousel-item">
+                <%= render 'patients/previous_appointment', appointment: appointment %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="carouselPreviousAppointments" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="carouselPreviousAppointments" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+</div>

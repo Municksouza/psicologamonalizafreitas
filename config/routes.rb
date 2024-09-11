@@ -1,39 +1,53 @@
 Rails.application.routes.draw do
-  get "messages/index"
-  get "messages/create"
-  get "messages/destroy"
-  get "appointments/index"
-  get "appointments/show"
-  get "appointments/new"
-  get "appointments/create"
-  get "appointments/edit"
-  get "appointments/update"
-  get "appointments/destroy"
-  get "home/index"
-  root "home#index"
-  devise_for :patients, controllers: { sessions: "sessions" }
-  devise_for :psychologists, controllers: { sessions: "sessions" }
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root to: "pages#home"
 
-  resources :patients do
-    resources :appointments, only: [ :new, :create, :index ]
-    resources :messages, only: [ :create, :destroy ]
+  # Devise routes for patients and psychologists
+  devise_for :patients, path: 'patients', controllers: {
+    registrations: "patients/registrations",
+    sessions: "patients/sessions"
+  }
+
+  devise_for :psychologists, path: 'psychologists', controllers: {
+    registrations: "psychologists/registrations",
+    sessions: "psychologists/sessions"
+  }
+
+  # Profile routes for patients and psychologists
+  get 'patients/:id/profile', to: 'patients#profile', as: 'profile_patient'
+  get 'psychologists/:id/profile', to: 'psychologists#profile', as: 'profile_psychologist'
+
+  # Appointment routes
+  resources :appointments do
+    member do
+      post :book  # POST route for patients to book an appointment
+      post :cancel  # POST route for patients to cancel a booking
+    end
+    collection do
+      get :index_json  # GET route to fetch appointments in JSON format for the calendar
+    end
   end
 
-  resources :appointments, only: [ :index, :show, :edit, :update, :destroy ]
+  # Full CRUD routes for Patients
+  resources :patients, only: [:show, :edit, :update, :destroy, :index] do
+    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
+      collection do
+        get :index_json  # For fetching events in JSON format for FullCalendar
+      end
+    end
+    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
+  end
 
+  # Full CRUD routes for Psychologists
+  resources :psychologists, only: [:show, :edit, :update, :destroy, :index] do
+    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show]
+    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
+  end
 
+  # Testimonials routes
+  resources :testimonials, only: [:edit, :update, :destroy]
 
-
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/*
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Calendar and contacts routes
+  get 'calendar', to: 'calendar#index'
+  get 'contacts/new'
+  post 'contacts/create'
 end
