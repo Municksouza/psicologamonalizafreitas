@@ -7,6 +7,7 @@ class Appointment < ApplicationRecord
   validate :end_after_start
 
   enum :status, [:available, :booked, :canceled]
+  scope :available, -> { where(patient_id: nil) }
 
   # Custom validation method to ensure end time is after start time
   def end_after_start
@@ -24,11 +25,11 @@ class Appointment < ApplicationRecord
     end
   end
 
-  def title_for_calendar
-    if patient
-      "Booked with #{patient.full_name}"
-    else
-      "Available Slot"
-    end
-  end
+  # def title_for_calendar
+  #   if patient
+  #     "Booked with #{patient.full_name}"
+  #   else
+  #     "Available Slot"
+  #   end
+  # end
 end

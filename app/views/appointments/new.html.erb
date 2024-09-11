@@ -1,16 +1,8 @@
-<h1>Book an Available Appointment</h1>
+<div id="calendar"></div>
+<%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
 
-<% if @available_appointments.any? %>
-  <!-- Initialize the form to create a booking -->
-  <%= simple_form_for :appointment_booking, url: patient_appointments_path(current_patient), method: :post do |f| %>
-    <div class="form-group">
-      <%= f.label :appointment_id, "Available Time Slots" %>
-      <!-- Ensure the appointment_id is passed correctly -->
-      <%= f.collection_select :appointment_id, @available_appointments, :id, :formatted_time_slot, prompt: "Select an available time slot" %>
-    </div>
-    <%= f.submit "Book This Appointment", class: 'btn btn-primary' %>
-  <% end %>
-<% else %>
-  <p>No available appointments at the moment.</p>
+<% if psychologist_signed_in? %>
+  <h1>Create New Appointment Slots</h1>
+<% elsif patient_signed_in? %>
+  <h1>Book Available Appointments</h1>
 <% end %>
-

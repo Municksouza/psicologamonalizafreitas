@@ -36,13 +36,14 @@ gem "bootsnap", require: false
 
 gem "devise"
 gem "simple_form"
-gem "fullcalendar-rails"
 gem "actioncable"
 gem 'cloudinary'
 gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem 'jquery-rails'
 gem 'activestorage'
+gem 'momentjs-rails'
+
 
 
 

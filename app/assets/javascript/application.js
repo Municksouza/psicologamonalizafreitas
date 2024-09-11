@@ -14,17 +14,35 @@
 //= require jquery_ujs
 //= require_tree .
 
+
 // Importações principais para a aplicação
 import "@hotwired/turbo-rails"
-import "controllers"
 import "@popperjs/core"
 import "bootstrap"
 
 // Rails UJS (para métodos DELETE e forms Ajax funcionarem corretamente)
-import Rails from "@rails/ujs"
-Rails.start()
+import "controllers"
+import "calendar"
 
-// FullCalendar
-import { Calendar } from '@fullcalendar/core'
-import moment from 'moment'
-import "appointments_calendar"
+import { Application } from "@hotwired/stimulus"
+
+
+const application = Application.start()
+application.register('modal', Modal)
+application.register('alert', Alert)
+
+// Configure Stimulus development experience
+application.debug = false
+window.Stimulus   = application
+
+document.addEventListener('turbolinks:load', function() {
+  $('#calendar').fullCalendar({
+    weekends: true
+  });
+});
+
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+
+export { application }

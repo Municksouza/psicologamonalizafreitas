@@ -1,27 +1,26 @@
-# <!-- app/views/patients/show.html.erb -->
-# <h1><%= @patient.name %>'s Profile</h1>
-# <p>Email: <%= @patient.email %></p>
-# <p>Phone Number: <%= @patient.phone_number %></p>
-# <p>Bio: <%= @patient.bio %></p>
+<div class="container mt-5">
+  <h1>Detalhes do Compromisso</h1>
 
-# <h2>Appointments</h2>
-# <ul>
-#   <% @appointments.each do |appointment| %>
-#     <li>
-#       <%= appointment.start_time %> - <%= appointment.end_time %>
-#       with <%= appointment.psychologist.name %>
-#       <%= link_to 'Cancel', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
-#     </li>
-#   <% end %>
-# </ul>
+  <!-- Exibindo detalhes da consulta -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Consulta com <%= @appointment.psychologist.full_name %></h5>
+      <p><strong>Data:</strong> <%= @appointment.start_time.strftime("%B %d, %Y %H:%M") %></p>
+      <p><strong>Status:</strong> <%= @appointment.status.capitalize %></p>
 
+      <% if @appointment.patient == current_patient %>
+        <!-- Se o paciente for o dono da consulta, pode cancelar -->
+        <%= button_to 'Cancelar Consulta', cancel_appointment_path(current_patient, @appointment),
+              method: :delete,
+              data: { confirm: "Tem certeza que deseja cancelar esta consulta? A vaga ficará disponível para outros pacientes." },
+              class: 'btn btn-danger' %>
+      <% else %>
+        <!-- Exibir mensagem se o paciente não for o dono da consulta -->
+        <p>Este compromisso não pertence a você.</p>
+      <% end %>
 
-<!-- app/views/patients/show.html.erb -->
-<h1><%= @patient.full_name %>'s Profile</h1>
-<p>Email: <%= @patient.email %></p>
-<p>Phone Number: <%= @patient.phone_number %></p>
-<p>Bio: <%= @patient.bio %></p>
-
-<h2>Appointments</h2>
-<%= render 'appointments/index' %>
-
+      <%= link_to 'Voltar para o Calendário?', patient_appointments_path(current_patient), class: 'btn btn-secondary mt-3' %>
+      <%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
+    </div>
+  </div>
+</div>

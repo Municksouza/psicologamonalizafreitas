@@ -12,27 +12,35 @@ Rails.application.routes.draw do
     sessions: "psychologists/sessions"
   }
 
-  # Define profile routes for patients and psychologists
+  # Profile routes for patients and psychologists
   get 'patients/:id/profile', to: 'patients#profile', as: 'profile_patient'
   get 'psychologists/:id/profile', to: 'psychologists#profile', as: 'profile_psychologist'
 
-  # Additional pages
-  get "signup_page", to: "pages#signup_page", as: :signup_page
-  get 'appointments/index_json', to: 'appointments#index_json', as: :appointments_json
-
-  # Patient and Psychologist routes for appointments
-  resources :patients, only: [:show, :edit, :update, :destroy] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update] do
-      member do
-        delete :cancel # Custom route for patients to cancel their appointment
-      end
+  # Appointment routes
+  resources :appointments do
+    member do
+      post :book  # POST route for patients to book an appointment
+      post :cancel  # POST route for patients to cancel a booking
     end
-    resources :messages, only: [:create, :destroy]
+    collection do
+      get :index_json  # GET route to fetch appointments in JSON format for the calendar
+    end
   end
 
-  resources :psychologists, only: [:show, :edit, :update, :destroy] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy]
-    resources :messages, only: [:create, :destroy]
+  # Full CRUD routes for Patients
+  resources :patients, only: [:show, :edit, :update, :destroy, :index] do
+    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
+      collection do
+        get :index_json  # For fetching events in JSON format for FullCalendar
+      end
+    end
+    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
+  end
+
+  # Full CRUD routes for Psychologists
+  resources :psychologists, only: [:show, :edit, :update, :destroy, :index] do
+    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show]
+    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
   end
 
   # Testimonials routes

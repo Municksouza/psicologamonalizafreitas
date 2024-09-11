@@ -1,19 +1,13 @@
-# <%= simple_form_for @psychologist, url: psychologist_path(@psychologist), method: :put do |f| %>
-#   <%= f.error_notification %>
+<h1>Detalhes do Compromisso</h1>
 
-#   <%= f.input :email %>
-#   <%= f.input :password, required: false %>
-#   <%= f.input :password_confirmation, required: false %>
-#   <%= f.button :submit %>
-# <% end %>
+  <p><strong>Paciente:</strong> <%= @appointment.patient.full_name %></p>
+  <p><strong>Psicólogo:</strong> <%= @appointment.psychologist.full_name %></p>
+  <p><strong>Data/Hora de Início:</strong> <%= @appointment.start_time %></p>
+  <p><strong>Data/Hora de Término:</strong> <%= @appointment.end_time %></p>
+  <p><strong>Status:</strong> <%= @appointment.status %></p>
 
+  <%= link_to 'Voltar', appointments_path %>
 
-
-<!-- app/views/psychologists/show.html.erb -->
-<h1><%= @psychologist.full_name %>'s Profile</h1>
-<p>Email: <%= @psychologist.email %></p>
-<p>Specialization: <%= @psychologist.specialization %></p>
-<p>Bio: <%= @psychologist.bio %></p>
-
-<h2>Appointments</h2>
-<%= render 'appointments/index' %>
+  <% if patient_signed_in? && @appointment.patient == current_patient %>
+    <%= link_to 'Cancelar Compromisso', cancel_patient_appointment_path(current_patient, @appointment), method: :delete, data: { confirm: 'Tem certeza?' } %>
+  <% end %>
