@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
   validates :end_time, presence: true
   validate :end_after_start
 
-  enum :status, [:available, :booked, :canceled]
+  enum :status, [ :available, :booked, :canceled ]
   scope :available, -> { where(patient_id: nil) }
 
   # Custom validation method to ensure end time is after start time
@@ -19,7 +19,7 @@ class Appointment < ApplicationRecord
   end
   def formatted_time_slot
     if start_time.present? && end_time.present?
-      "#{start_time.strftime('%d-%m-%Y %H:%M')} - #{end_time.strftime('%H:%M')}"
+      "#{start_time.strftime("%d-%m-%Y %H:%M")} - #{end_time.strftime("%H:%M")}"
     else
       "Time not set"
     end

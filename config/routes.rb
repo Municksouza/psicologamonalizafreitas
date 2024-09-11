@@ -2,19 +2,19 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   # Devise routes for patients and psychologists
-  devise_for :patients, path: 'patients', controllers: {
+  devise_for :patients, path: "patients", controllers: {
     registrations: "patients/registrations",
     sessions: "patients/sessions"
   }
 
-  devise_for :psychologists, path: 'psychologists', controllers: {
+  devise_for :psychologists, path: "psychologists", controllers: {
     registrations: "psychologists/registrations",
     sessions: "psychologists/sessions"
   }
 
   # Profile routes for patients and psychologists
-  get 'patients/:id/profile', to: 'patients#profile', as: 'profile_patient'
-  get 'psychologists/:id/profile', to: 'psychologists#profile', as: 'profile_psychologist'
+  get "patients/:id/profile", to: "patients#profile", as: "profile_patient"
+  get "psychologists/:id/profile", to: "psychologists#profile", as: "profile_psychologist"
 
   # Appointment routes
   resources :appointments do
@@ -28,26 +28,26 @@ Rails.application.routes.draw do
   end
 
   # Full CRUD routes for Patients
-  resources :patients, only: [:show, :edit, :update, :destroy, :index] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
+  resources :patients, only: [ :show, :edit, :update, :destroy, :index ] do
+    resources :appointments, only: [ :index, :new, :create, :edit, :update, :destroy, :show ] do
       collection do
         get :index_json  # For fetching events in JSON format for FullCalendar
       end
     end
-    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
+    resources :messages, only: [ :create, :destroy, :edit, :update, :index, :new ]  # Full CRUD for messages
   end
 
   # Full CRUD routes for Psychologists
-  resources :psychologists, only: [:show, :edit, :update, :destroy, :index] do
-    resources :appointments, only: [:index, :new, :create, :edit, :update, :destroy, :show]
-    resources :messages, only: [:create, :destroy, :edit, :update, :index, :new]  # Full CRUD for messages
+  resources :psychologists, only: [ :show, :edit, :update, :destroy, :index ] do
+    resources :appointments, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
+    resources :messages, only: [ :create, :destroy, :edit, :update, :index, :new ]  # Full CRUD for messages
   end
 
   # Testimonials routes
-  resources :testimonials, only: [:edit, :update, :destroy]
+  resources :testimonials, only: [ :edit, :update, :destroy ]
 
   # Calendar and contacts routes
-  get 'calendar', to: 'calendar#index'
-  get 'contacts/new'
-  post 'contacts/create'
+  get "calendar", to: "calendar#index"
+  get "contacts/new"
+  post "contacts/create"
 end

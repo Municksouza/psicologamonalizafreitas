@@ -13,7 +13,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/events", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # Event. As you add validations to Event, be sure to
   # adjust the attributes here as well.
@@ -76,13 +75,10 @@ RSpec.describe "/events", type: :request do
           post events_url, params: { event: invalid_attributes }
         }.to change(Event, :count).by(0)
       end
-
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post events_url, params: { event: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -91,14 +87,12 @@ RSpec.describe "/events", type: :request do
       let(:new_attributes) {
         skip("Add a hash of attributes valid for your model")
       }
-
       it "updates the requested event" do
         event = Event.create! valid_attributes
         patch event_url(event), params: { event: new_attributes }
         event.reload
         skip("Add assertions for updated state")
       end
-
       it "redirects to the event" do
         event = Event.create! valid_attributes
         patch event_url(event), params: { event: new_attributes }
@@ -108,13 +102,11 @@ RSpec.describe "/events", type: :request do
     end
 
     context "with invalid parameters" do
-    
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         event = Event.create! valid_attributes
         patch event_url(event), params: { event: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
@@ -125,7 +117,6 @@ RSpec.describe "/events", type: :request do
         delete event_url(event)
       }.to change(Event, :count).by(-1)
     end
-
     it "redirects to the events list" do
       event = Event.create! valid_attributes
       delete event_url(event)

@@ -1,5 +1,5 @@
 class Psychologists::SessionsController < Devise::RegistrationsController
-  before_action :authenticate_psychologist!, only: [:destroy]
+  before_action :authenticate_psychologist!, only: [ :destroy ]
 
 
 

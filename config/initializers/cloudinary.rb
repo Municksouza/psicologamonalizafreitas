@@ -1,8 +1,8 @@
-require_relative '../../config/environment'
+require_relative "../../config/environment"
 
-if ENV['CLOUDINARY_URL'].present?
-  uri = URI.parse(ENV['CLOUDINARY_URL'])
-  puts "Cloudinary URL: #{ENV['CLOUDINARY_URL']}"
+if ENV["CLOUDINARY_URL"].present?
+  uri = URI.parse(ENV["CLOUDINARY_URL"])
+  puts "Cloudinary URL: #{ENV["CLOUDINARY_URL"]}"
 
 
   Cloudinary.config do |config|
