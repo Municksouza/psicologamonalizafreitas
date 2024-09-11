@@ -1,11 +1,11 @@
 class PagesController < ApplicationController
-  before_action :authenticate_patient_or_psychologist!, only: [:index]  # Ensure only logged-in users can access the index
+  before_action :authenticate_patient_or_psychologist!, only: [ :index ]  # Ensure only logged-in users can access the index
 
   def home
     if psychologist_signed_in?
       @appointments = current_psychologist.appointments
     elsif patient_signed_in?
-      @appointments = Appointment.where(status: 'available')
+      @appointments = Appointment.where(status: "available")
     else
       @appointments = []
     end
@@ -28,7 +28,7 @@ class PagesController < ApplicationController
   end
 
   def signup_page
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :full_name, :phone_number, :address, :date_of_birth, :photo])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :password, :password_confirmation, :full_name, :phone_number, :address, :date_of_birth, :photo ])
   end
 
 
@@ -37,12 +37,8 @@ class PagesController < ApplicationController
   def authenticate_patient_or_psychologist!
     if !patient_signed_in? && !psychologist_signed_in?
       redirect_to new_patient_session_path
-      return
     elsif !patient_signed_in? && psychologist_signed_in?
       redirect_to new_psychologist_session_path
-      return
     end
   end
-
-
 end

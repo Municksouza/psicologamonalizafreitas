@@ -318,5 +318,4 @@ Devise.setup do |config|
       auth.cookies.signed["psychologist_session"] = user.id
     end
   end
-
 end

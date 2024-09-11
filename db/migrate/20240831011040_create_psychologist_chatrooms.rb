@@ -5,7 +5,7 @@ class CreatePsychologistChatrooms < ActiveRecord::Migration[7.0]
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false
 
-      t.index [:psychologist_id], name: "index_psychologist_chatrooms_on_psychologist_id"
+      t.index [ :psychologist_id ], name: "index_psychologist_chatrooms_on_psychologist_id"
     end
   end
 end

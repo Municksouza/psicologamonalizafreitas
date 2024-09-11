@@ -1,5 +1,5 @@
 class PsychologistsController < ApplicationController
-  before_action :set_psychologist, only: [:show, :edit, :update, :destroy]
+  before_action :set_psychologist, only: [ :show, :edit, :update, :destroy ]
   before_action :authenticate_psychologist!
 
   def profile
@@ -17,7 +17,7 @@ class PsychologistsController < ApplicationController
 
   def update
     if @psychologist.update(psychologist_params)
-      redirect_to @psychologist, notice: 'Psychologist profile was successfully updated.'
+      redirect_to @psychologist, notice: "Psychologist profile was successfully updated."
     else
       render :edit
     end
@@ -25,7 +25,7 @@ class PsychologistsController < ApplicationController
 
   def destroy
     @psychologist.destroy
-    redirect_to root_path, notice: 'Psychologist profile was successfully deleted.'
+    redirect_to root_path, notice: "Psychologist profile was successfully deleted."
   end
 
   private

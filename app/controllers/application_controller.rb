@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
   # Configura os parâmetros permitidos no Devise para os modelos Patient e Psychologist
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
   end
 end

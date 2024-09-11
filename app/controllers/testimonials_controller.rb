@@ -1,6 +1,6 @@
 class TestimonialsController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
-  before_action :set_testimonial, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :edit, :update, :destroy ]
+  before_action :set_testimonial, only: [ :edit, :update, :destroy ]
 
   def index
     @testimonials = Testimonial.all
@@ -13,7 +13,7 @@ class TestimonialsController < ApplicationController
   def update
     authorize @testimonial
     if @testimonial.update(testimonial_params)
-      redirect_to root_path, notice: 'Testimonial updated successfully.'
+      redirect_to root_path, notice: "Testimonial updated successfully."
     else
       render :edit
     end
@@ -22,7 +22,7 @@ class TestimonialsController < ApplicationController
   def destroy
     authorize @testimonial
     @testimonial.destroy
-    redirect_to root_path, notice: 'Testimonial deleted successfully.'
+    redirect_to root_path, notice: "Testimonial deleted successfully."
   end
 
   private
