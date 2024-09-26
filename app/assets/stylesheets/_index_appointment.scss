@@ -1,0 +1,77 @@
+.new-appointement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 100vh;
+  justify-content: center;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  position: relative; /* Para o posicionamento da imagem */
+}
+
+h1 {
+  font-size: 3rem; /* Aumentar o tamanho do título */
+  color: #343a40;
+  text-align: center;
+  margin-bottom: 50px; /* Maior espaçamento abaixo do título */
+}
+
+/* Estilo para o calendário */
+#calendar {
+  width: 90%; /* Diminui o tamanho do calendário */
+  max-width: 900px; /* Ajusta o tamanho máximo do calendário */
+  margin: 0 auto;
+  border: 3px solid #dedede; /* Bordas mais grossas para destaque */
+  padding: 20px; /* Ajuste de preenchimento para o calendário */
+  background-color: #fff;
+  border-radius: 16px; /* Cantos mais arredondados */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+}
+
+/* Estilos para os botões */
+button.btn-primary, .btn.btn-primary {
+  background-color: #4b77be;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-primary:hover, .btn.btn-primary:hover {
+  background-color: #2e5f9a;
+}
+
+button.btn-secondary, .btn.btn-secondary {
+  background-color: #777;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.btn-secondary:hover, .btn.btn-secondary:hover {
+  background-color: #555;
+}
+
+/* Alinhamento dos botões */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px; /* Maior espaço acima dos botões */
+}
+
+.btn-container .btn {
+  margin: 0 15px;
+}
+
+#btn-profile {
+  font-weight: bold;
+}
+
+/* Estilo para a imagem no canto inferior esquerdo */
+.home-image {
+  position: relative;
+  bottom: -80px;
+  left: auto;
+  right: 110px;
+  width: 100px;
+  height: auto;
+}

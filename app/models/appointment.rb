@@ -17,6 +17,7 @@ class Appointment < ApplicationRecord
       errors.add(:end_time, "must be after the start time")
     end
   end
+  
   def formatted_time_slot
     if start_time.present? && end_time.present?
       "#{start_time.strftime("%d-%m-%Y %H:%M")} - #{end_time.strftime("%H:%M")}"
@@ -25,11 +26,11 @@ class Appointment < ApplicationRecord
     end
   end
 
-  # def title_for_calendar
-  #   if patient
-  #     "Booked with #{patient.full_name}"
-  #   else
-  #     "Available Slot"
-  #   end
-  # end
+  def available?
+    patient.nil?
+  end
+
+  def booked_by?(patient)
+    self.patient == patient
+  end
 end

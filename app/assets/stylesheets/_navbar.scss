@@ -2,7 +2,7 @@
 .navbar {
   background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
   padding: 5px 0; /* Reduce vertical padding */
-  box-shadow: 0px 2px 2px 0px rgb(54, 54, 203); /* Reduce shadow */
+  box-shadow: 0px 2px 2px 0px #EDB5BF; /* Reduce shadow */
 
   .navbar-brand {
     display: flex;
@@ -63,9 +63,9 @@
     padding: 8px 16px; /* Reduce padding */
     align-items: center;
     gap: 6px; /* Reduce gap */
-    background: #FFD050;
+    background: #28697E;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25); /* Reduce shadow */
-    color: var(--Black, #232536);
+    color: white;
     font-family: 'Inknut Antiqua', serif;
     font-size: 16px; /* Reduce font size */
     line-height: 20px; /* Adjust line-height */

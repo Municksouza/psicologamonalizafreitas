@@ -3,18 +3,24 @@
     <div class="row align-items-center h-100">
       <!-- Left column with the logo and content -->
       <div class="col-md-6 d-flex flex-column align-items-start justify-content-center">
-        <!-- Logo 2 -->
-        <div class="content-ima mb-3">
-          <%= image_tag "logo2.png", loading: 'lazy', class: 'logo2' %>
+        <div class="logo-container">
+          <!-- Sparkle image -->
+          <div class="sparkle-container">
+            <%= image_tag "Sparkle.png", alt: "Profile Picture", class: 'sparkle' %>
+          </div>
+          <!-- Logo 2 image -->
+          <div class="content-ima mb-3">
+            <%= image_tag "logo2.png", loading: "lazy", class: "logo2" %>
+          </div>
         </div>
         <!-- Welcome text -->
-        <p class="top-content mb-2">
-          Bem-vindo ao Seu Espaço de Crescimento e Expressão Pessoal
-        </p>
+          <p class="top-content mb-2">
+            Bem-vindo ao Seu Espaço de Crescimento e Expressão Pessoal
+          </p>
         <!-- Subtitle Content -->
-        <p class="subtitle-content mb-4">
-          Como psicóloga, meu objetivo é ajudar você a desenvolver habilidades sociais e melhorar sua comunicação, promovendo o bem-estar emocional e a conexão interpessoal. Ofereço um ambiente seguro e acolhedor para explorar seus pensamentos e sentimentos, encontrando caminhos para uma vida mais equilibrada e satisfatória.
-        </p>
+          <p class="subtitle-content mb-4">
+            Como psicóloga, meu objetivo é ajudar você a desenvolver habilidades sociais e melhorar sua comunicação, promovendo o bem-estar emocional e a conexão interpessoal. Ofereço um ambiente seguro e acolhedor para explorar seus pensamentos e sentimentos, encontrando caminhos para uma vida mais equilibrada e satisfatória.
+          </p>
         <div>
 
           <!-- Available Appointments Section -->
@@ -55,15 +61,19 @@
     </div>
   </div>
 
-  <div class="w-100 d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
-  <h2 class="banner-title">Quem é Monaliza?</h2>
-  <p class="banner-text">
-    Gostaria de conhecer mais sobre a sua psicóloga? Ela está aqui para oferecer apoio e orientação, criando um espaço seguro onde você pode falar abertamente sobre suas preocupações e emoções. Com uma abordagem empática e personalizada, ela busca ajudar você a alcançar um melhor equilíbrio emocional e bem-estar.
-  </p>
-</div>
+  <div class="d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
+    <h2 class="banner-title">Quem é Monaliza?</h2>
+    <p class="banner-text">
+      Gostaria de conhecer mais sobre a sua psicóloga? Ela está aqui para oferecer apoio e orientação, criando um espaço seguro onde você pode falar abertamente sobre suas preocupações e emoções. Com uma abordagem empática e personalizada, ela busca ajudar você a alcançar um melhor equilíbrio emocional e bem-estar.
+    </p>
+  </div>
 
+  <div class="carousel-container">
+    <div class="vector-top-left">
+      <%= image_tag 'vector.png', alt: 'Vector Top Left', class: 'vector' %>
+    </div>
 
-  <div class="carousel-home">
+    <div class="carousel-home">
       <!-- Carousel on the right side -->
       <div class="col-md-8">
         <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
@@ -88,14 +98,20 @@
         </div>
       </div>
     </div>
+
+    <div class="vector-bottom-right">
+      <%= image_tag 'vector.png', alt: 'Vector Bottom Right', class: 'vector' %>
+    </div>
   </div>
 
-  <div class="w-100 d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
-  <h2 class="banner-title">Depoimentos</h2>
-  <p class="banner-text">
-    Nesta seção, você encontrará palavras de pacientes que compartilham suas experiências com Monaliza. Cada depoimento reflete a jornada pessoal de alguém em busca de apoio emocional, autoconhecimento e bem-estar. Leia o que nossos pacientes têm a dizer sobre como Monaliza os ajudou a superar desafios, encontrar equilíbrio e fortalecer sua saúde mental. Essas histórias reais são um testemunho do impacto positivo e transformador do cuidado psicológico.
-  </p>
-</div>
+
+  <div class=" d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
+    <h2 class="banner-title">Depoimentos</h2>
+    <p class="banner-text">
+      Nesta seção, você encontrará palavras de pacientes que compartilham suas experiências com Monaliza. Cada depoimento reflete a jornada pessoal de alguém em busca de apoio emocional, autoconhecimento e bem-estar. Leia o que nossos pacientes têm a dizer sobre como Monaliza os ajudou a superar desafios, encontrar equilíbrio e fortalecer sua saúde mental. Essas histórias reais são um testemunho do impacto positivo e transformador do cuidado psicológico.
+    </p>
+    <div class="wave wave-bottom"></div>
+  </div>
 
   <!-- Render Testimonials -->
   <%= render 'testimonials/index' %>

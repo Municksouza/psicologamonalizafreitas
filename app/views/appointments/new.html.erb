@@ -1,8 +1,68 @@
-<div id="calendar"></div>
-<%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
+<div class="new-appointment">
+  <!-- For Psychologists -->
+  <% if psychologist_signed_in? %>
+    <h1>Adicione as Datas, Horas e Dias Disponíveis</h1>
+    <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
+      <%= form.input :date, as: :string, input_html: { id: 'appointment_date', class: 'form-control datepicker', placeholder: 'Selecione Data e Hora' } %>
+      <%= form.input :start_time, as: :time, input_html: { id: 'appointment_start_time' } %>
+      <%= form.input :end_time, as: :time, input_html: { id: 'appointment_end_time' } %>
+      <%= form.button :submit, 'Salvar Disponibilidade', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
 
+  <!-- For Patients -->
+  <% if patient_signed_in? %>
+    <h1>Marque Sua Consulta</h1>
+    <p>Escolha um horário disponível abaixo:</p>
+    <%= simple_form_for @appointment, url: book_patient_appointment_path(patient_id: current_patient.id, id: @appointment.try(:id)), method: :post, local: true do |form| %>
+      <input id="appointment_booking_date" class="string optional form-control datepicker flatpickr-input" readonly="readonly" type="hidden" name="appointment[date]">
+      <%= form.button :submit, 'Marcar Consulta', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="available-appointments">
+  <% if @available_appointments.present? %>
+    <ul>
+      <% @available_appointments.each do |appointment| %>
+        <% if appointment.date.present? && appointment.start_time.present? && appointment.end_time.present? %>
+          <li>
+            <%= appointment.date.strftime("%A, %d %B %Y") %> às
+            <%= appointment.start_time.strftime("%H:%M") %> -
+            <%= appointment.end_time.strftime("%H:%M") %>
+
+            <% if appointment.available? %>
+              <%= button_to 'Reservar', book_patient_appointment_path(current_patient.id, appointment.id), method: :post, class: 'btn btn-success' %>
+            <% end %>
+
+            <% if appointment.booked_by?(current_patient) %>
+              <%= button_to 'Cancelar', cancel_patient_appointment_path(current_patient.id, appointment.id), method: :delete, class: 'btn btn-danger' %>
+            <% end %>
+          </li>
+        <% else %>
+          <li>Data ou hora indisponível para esta consulta.</li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Não há consultas disponíveis no momento.</p>
+  <% end %>
+</div>
+
+
+<!-- Ações adicionais para psicólogos -->
 <% if psychologist_signed_in? %>
-  <h1>Create New Appointment Slots</h1>
-<% elsif patient_signed_in? %>
-  <h1>Book Available Appointments</h1>
+  <div class="container">
+    <h3>Configure sua página de agendamento</h3>
+    <%= simple_form_for @availability, url: appointments_path, method: :post do |f| %>
+      <%= f.input :date, as: :string, input_html: { id: 'availability_date', class: 'form-control', type: 'datetime-local', data: { controller: 'flatpickr', flatpickr_enable_time: true, flatpickr_date_format: 'Y-m-d H:i' } } %>
+      <%= f.submit 'Salvar Disponibilidade', class: 'btn btn-success' %>
+    <% end %>
+  </div>
 <% end %>
+
+<!-- Botões de Ação -->
+<div class="btn-container">
+  <%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary' if patient_signed_in? %>
+  <%= link_to 'Voltar para Perfil', profile_psychologist_path(current_psychologist), class: 'btn btn-secondary' if psychologist_signed_in? %>
+</div>

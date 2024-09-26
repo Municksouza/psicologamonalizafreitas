@@ -1,0 +1,112 @@
+/* Estilo geral do container */
+.min-vh-100 {
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  display: flex;
+}
+
+.container-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Estilo do formulário */
+.form-login-patient {
+  background-color: #ffffff;
+  color: #28697E;
+  font-family: 'Alegreya', serif;
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+}
+
+/* Estilo do título */
+.card-title-login {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4D6D9A;
+  margin-bottom: 30px;
+}
+
+/* Estilo dos campos de input */
+.form-inputs-login input {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.form-inputs-login input:focus {
+  border-color: #28697E;
+  outline: none;
+  box-shadow: 0 0 5px rgba(40, 105, 126, 0.4);
+}
+
+/* Estilo do botão de envio */
+.form-actions-login .button {
+  background-color: #28697E;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-actions-login .button:hover {
+  background-color: #EDB5BF;
+}
+
+.form-actions-login .button:active {
+  background-color: #245d70;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 576px) {
+  .form-login-patient {
+    padding: 20px 10px;
+    font-size: 0.9rem;
+  }
+
+  .form-inputs input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .form-actions .button {
+    font-size: 1rem;
+  }
+
+  .card-title-login {
+    font-size: 1.5rem;
+  }
+}
+
+/* Adicionando os vetores no formulário */
+.vector-bottom-right-login {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 80px;
+  height: auto;
+}
+
+.vector-top-left-login {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 80px;
+  height: auto;
+}

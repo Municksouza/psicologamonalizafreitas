@@ -16,38 +16,35 @@ Rails.application.routes.draw do
   get "patients/:id/profile", to: "patients#profile", as: "profile_patient"
   get "psychologists/:id/profile", to: "psychologists#profile", as: "profile_psychologist"
 
-  # Appointment routes
-  resources :appointments do
-    member do
-      post :book  # POST route for patients to book an appointment
-      post :cancel  # POST route for patients to cancel a booking
-    end
-    collection do
-      get :index_json  # GET route to fetch appointments in JSON format for the calendar
-    end
-  end
 
-  # Full CRUD routes for Patients
-  resources :patients, only: [ :show, :edit, :update, :destroy, :index ] do
-    resources :appointments, only: [ :index, :new, :create, :edit, :update, :destroy, :show ] do
-      collection do
-        get :index_json  # For fetching events in JSON format for FullCalendar
+
+  # Appointments routes for patients
+  resources :patients, only: [:show, :create, :update, :destroy, :index] do
+    resources :appointments, only: [:index, :new, :create] do
+      member do
+        post :book  # Member action to book a specific appointment
+        delete :cancel  # Cancel a specific appointment
       end
     end
-    resources :messages, only: [ :create, :destroy, :edit, :update, :index, :new ]  # Full CRUD for messages
   end
 
-  # Full CRUD routes for Psychologists
+
+
+  # Appointments routes for psychologists (full management)
   resources :psychologists, only: [ :show, :edit, :update, :destroy, :index ] do
-    resources :appointments, only: [ :index, :new, :create, :edit, :update, :destroy, :show ]
-    resources :messages, only: [ :create, :destroy, :edit, :update, :index, :new ]  # Full CRUD for messages
+    resources :appointments, only: [ :index, :new, :create, :edit, :update, :destroy ] do
+      member do
+        delete :cancel  # Psychologists can also cancel appointments
+      end
+    end
   end
 
-  # Testimonials routes
-  resources :testimonials, only: [ :edit, :update, :destroy ]
+  # Full CRUD routes for Messages and Testimonials for both patients and psychologists
+  resources :messages, only: [ :create, :destroy, :edit, :update, :index, :new ]
+  resources :testimonials, only: [ :new, :create, :edit, :update, :destroy ]
+  resources :appointments, only: [ :create, :destroy ]
 
-  # Calendar and contacts routes
-  get "calendar", to: "calendar#index"
+  # Contact routes
   get "contacts/new"
   post "contacts/create"
 end

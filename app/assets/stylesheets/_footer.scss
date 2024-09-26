@@ -4,11 +4,12 @@
   align-items: center;
   padding: 10px 20px;
   background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
-  box-shadow: 0px 2px 2px 0px rgb(54, 54, 203) inset;
+  box-shadow: 0px 2px 2px 0px #EDB5BF inset;
   width: 100%;
-  max-width: none; /* Remove max-width constraint */
-  margin: 0 auto; /* Center the footer */
-  position: relative; /* Ensure footer's positioning context for child elements */
+  max-width: 100%; /* Ensure the footer uses full width */
+  margin: 0; /* Remove margin to ensure full width */
+  position: relative;
+  box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
 .footer-left {
@@ -21,9 +22,9 @@
 
 .footer-right {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-right: 30px;
 }
@@ -31,23 +32,23 @@
 .footer-right .logo {
   max-width: 200px;
   height: auto;
-  margin-bottom: 10px; /* Add space below the logo */
+  margin-bottom: 10px;
 }
 
 .footer-right .phone-number {
   font-size: small;
-  margin: 0; /* Remove margin to align with the logo */
-  margin-left: 10px; /* Adjust margin to move phone number slightly to the right */
+  margin: 0;
+  margin-left: 10px;
 }
 
 .footer-center {
   position: absolute;
-  bottom: 10px; /* Adjust position from the bottom */
+  bottom: 10px;
   left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
+  transform: translateX(-50%);
   text-align: center;
   width: 100%;
-  padding: 5px 0; /* Optional: padding to give some space */
+  padding: 5px 0;
 }
 
 .text-muted {

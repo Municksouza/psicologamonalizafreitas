@@ -1,2 +1,83 @@
-<div id="calendar"></div>
-<%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
+<div class="new-appointment">
+  <!-- For Psychologists -->
+  <% if psychologist_signed_in? %>
+    <h1>Adicione as datas, horas e dias</h1>
+    <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
+      <!-- Add Flatpickr for selecting the date -->
+      <%= form.input :date, as: :string, input_html: { class: 'datepicker', placeholder: 'Select Date', data: { controller: "flatpickr", flatpickr_enable_time: "false", flatpickr_date_format: "Y-m-d" } } %>
+
+      <!-- Time Selectors for start and end time -->
+      <%= form.input :start_time, as: :time, label: 'Start Time' %>
+      <%= form.input :end_time, as: :time, label: 'End Time' %>
+
+      <%= form.button :submit, 'Salvar Disponibilidade', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+
+  <!-- For Patients -->
+  <% if patient_signed_in? %>
+    <h1>Marque sua Consulta</h1>
+    <p>Escolha um horário disponível abaixo:</p>
+
+    <!-- Form for booking an appointment -->
+    <%= simple_form_for @appointment, url: new_patient_appointment_path, method: :post, local: true do |form| %>
+      <!-- Flatpickr for the date picker -->
+      <%= form.input :date, as: :string, input_html: { class: 'datepicker', placeholder: 'Select Date', data: { controller: "flatpickr", flatpickr_enable_time: "false", flatpickr_date_format: "Y-m-d" } } %>
+
+      <%= form.button :submit, 'Marcar Consulta', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+
+  <!-- Display available slots for patients -->
+  <% if @available_appointments.present? %>
+    <ul>
+      <% @available_appointments.each do |appointment| %>
+        <% if appointment.date.present? && appointment.start_time.present? && appointment.end_time.present? %>
+          <li>
+            <%= appointment.date.strftime("%A, %d %B %Y") %> às
+            <%= appointment.start_time.strftime("%H:%M") %> -
+            <%= appointment.end_time.strftime("%H:%M") %>
+
+            <!-- Button to book the available appointment -->
+            <%= button_to 'Reservar', book_patient_appointment_path(appointment), method: :post, class: 'btn btn-success' if appointment.available? %>
+            <!-- Button to cancel the booked appointment -->
+            <%= button_to 'Cancelar', cancel_appointment_path(appointment), method: :delete, class: 'btn btn-danger' if appointment.booked_by?(current_patient) %>
+          </li>
+        <% else %>
+          <li>Data ou hora indisponível para esta consulta.</li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Não há consultas disponíveis no momento.</p>
+  <% end %>
+</div>
+
+<!-- Add Flatpickr for availability management (psychologists only) -->
+<% if psychologist_signed_in? %>
+  <div class="container">
+    <h3>Configure sua página de agendamento</h3>
+    <ul>
+      <!-- Availability Management -->
+      <li>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#availability">
+          Configure sua Disponibilidade
+        </button>
+        <div id="availability" class="collapse">
+          <%= simple_form_for @availability, url: appointments_path, method: :post do |f| %>
+            <!-- Add Flatpickr for availability dates -->
+            <%= f.input :start_time, label: 'Hora de Início', as: :time, input_html: { class: 'timepicker', data: { controller: "flatpickr" } } %>
+            <%= f.input :end_time, label: 'Hora de Fim', as: :time, input_html: { class: 'timepicker', data: { controller: "flatpickr" } } %>
+            <%= f.submit 'Salvar Disponibilidade', class: 'btn btn-success' %>
+          <% end %>
+        </div>
+      </li>
+    </ul>
+  </div>
+<% end %>
+
+<!-- Action Buttons -->
+<div class="btn-container">
+  <%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary' if patient_signed_in? %>
+  <%= link_to 'Voltar para Perfil', profile_psychologist_path(current_psychologist), class: 'btn btn-secondary' if psychologist_signed_in? %>
+</div>

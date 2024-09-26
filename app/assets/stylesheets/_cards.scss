@@ -1,0 +1,154 @@
+/* Estilo do Card de Testemunho */
+.card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 50px;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  background-size: cover; /* Ensure the background image covers the entire card */
+  background-position: center; /* Center the background image */
+  font-family: "Inknut Antiqua";
+  max-width: 500px; /* Limit card width */
+  width: 100%; /* Make card responsive */
+  margin: 0 auto; /* Center card horizontally */
+}
+
+/* Optional: Add a semi-transparent overlay to improve text readability */
+.card-body {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  /* Adjust the RGBA value if needed to improve readability */
+}
+
+.card-body .card-title {
+  font-size: 1.4rem;
+  color: #5F6366; /* Cinza */
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.card-body .card-text {
+  font-size: 1rem;
+  color: #28697E; /* Azul médio */
+  margin-bottom: 15px;
+}
+
+.card-body .btn {
+  margin-right: 5px;
+  font-size: 0.9rem;
+}
+
+.card-body .btn-primary {
+  background-color: #28697E; /* Botão azul médio */
+  border-color: #28697E;
+  color: #fff;
+}
+
+.card-body .btn-primary:hover {
+  background-color: #86B3D1; /* Hover azul claro */
+}
+
+.card-body .btn-danger {
+  background-color: #28697E; /* Botão azul esverdeado claro */
+  border-color: #28697E;
+  color: #fff;
+}
+
+.card-body .btn-danger:hover {
+  background-color: #EDB5BF; /* Rosa hover */
+}
+
+.card-show {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  background-size: cover;
+  background-position: center;
+  font-family: "Inknut Antiqua";
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto; /* Centraliza horizontalmente */
+
+  .card-body-show {
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  }
+
+  .card-body-show .card-title {
+    font-size: 1.4rem;
+    color: #5F6366;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .card-body-show .card-text {
+    font-size: 1rem;
+    color: #28697E;
+    margin-bottom: 15px;
+  }
+
+  .card-body-show .btn {
+    margin-right: 5px;
+    font-size: 0.9rem;
+  }
+
+  .card-body-show .btn-primary {
+    background-color: #28697E;
+    border-color: #28697E;
+    color: #fff;
+  }
+
+  .card-body-show .btn-primary:hover {
+    background-color: #28697E;
+  }
+
+  .card-body-show .btn-danger {
+    background-color: #28697E;
+    border-color: #28697E;
+    color: #fff;
+  }
+
+  .card-body-show .btn-danger:hover {
+    background-color: #EDB5BF;
+  }
+}
+
+.vector-left {
+  position: absolute;
+  left: 150px;
+  width: 250px;
+  top: 230px;
+  height: auto;
+  z-index: 1;
+  opacity: 0.2;
+}
+
+.vector-right{
+  position: absolute;
+  left: 150px;
+  width: 250px;
+  top: 230px;
+  height: auto;
+  z-index: 1;
+  opacity: 0.2;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 767px) {
+  .card {
+    max-width: 100%; /* Ensure card fits within container on small screens */
+  }
+}

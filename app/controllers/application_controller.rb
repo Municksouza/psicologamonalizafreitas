@@ -1,15 +1,15 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_patient, :current_psychologist, :patient_signed_in?, :psychologist_signed_in?
+  before_action :log_current_user
   before_action :check_warden
 
-
   def check_warden
+    # Adding log to track which user is currently logged in
     Rails.logger.debug "Warden user: #{warden.user.inspect}"
-    Rails.logger.debug "Warden authenticate: #{warden.authenticate(scope: :patient)}"
+    Rails.logger.debug "Warden authenticate (patient): #{warden.authenticate(scope: :patient)}"
     Rails.logger.debug "Warden authenticate (psychologist): #{warden.authenticate(scope: :psychologist)}"
   end
-
 
   private
 
@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Define whether the current user is a patient or psychologist
   def patient_signed_in?
     current_patient.present?
   end
@@ -31,6 +32,7 @@ class ApplicationController < ActionController::Base
     current_psychologist.present?
   end
 
+  # Ensure correct redirection after sign out
   def after_sign_out_path_for(resource_or_scope)
     if resource_or_scope == :patient
       new_patient_session_path  # Redirect to patient login
@@ -41,9 +43,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Ensure correct redirection after sign in
   def after_sign_in_path_for(resource)
-    Rails.logger.debug "User type: #{resource.class.name}" # Log user type
-
     if resource.is_a?(Patient)
       profile_patient_path(resource)
     elsif resource.is_a?(Psychologist)
@@ -56,9 +57,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # Configura os parâmetros permitidos no Devise para os modelos Patient e Psychologist
+  # Permit additional Devise parameters for sign up and account update
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
   end
+end
+
+def log_current_user
+  Rails.logger.debug "Current Patient: #{current_patient.inspect}"
+  Rails.logger.debug "Current Psychologist: #{current_psychologist.inspect}"
 end
