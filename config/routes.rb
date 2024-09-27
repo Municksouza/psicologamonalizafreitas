@@ -22,8 +22,8 @@ Rails.application.routes.draw do
   resources :patients, only: [:show, :create, :update, :destroy, :index] do
     resources :appointments, only: [:index, :new, :create] do
       member do
-        post :book  # Member action to book a specific appointment
-        delete :cancel  # Cancel a specific appointment
+        post 'book', to: 'appointments#book', as: 'book_patient_appointment'
+        delete 'cancel', to: 'appointments#cancel', as: 'cancel_patient_appointment'
       end
     end
   end
@@ -44,7 +44,9 @@ Rails.application.routes.draw do
   resources :testimonials, only: [ :new, :create, :edit, :update, :destroy ]
   resources :appointments, only: [ :create, :destroy ]
 
+
   # Contact routes
+  get 'appointments', to: 'patients#appointments'
   get "contacts/new"
   post "contacts/create"
 end

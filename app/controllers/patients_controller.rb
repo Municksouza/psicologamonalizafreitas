@@ -17,6 +17,9 @@ class PatientsController < ApplicationController
     @appointment = Appointment.new
   end
 
+  def appointments
+    @appointments = current_patient.appointments
+  end
 
   def edit
     # Editing patient profile

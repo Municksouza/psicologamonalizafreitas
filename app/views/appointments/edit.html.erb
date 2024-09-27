@@ -1,0 +1,7 @@
+<h1>Editar Horário</h1>
+
+<%= simple_form_for @appointment do |f| %>
+  <%= f.input :start_time, as: :datetime_local %>
+  <%= f.input :end_time, as: :datetime_local %>
+  <%= f.button :submit, 'Salvar', class: 'btn btn-primary' %>
+<% end %>
