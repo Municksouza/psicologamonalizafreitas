@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_psychologist!, only: [:edit, :update, :destroy]
   before_action :authenticate_patient!, only: [:new, :create, :cancel, :book]
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :cancel, :book]
+  before_action :set_appointment, only: [ :edit, :update, :destroy, :cancel, :book]
 
   def index
     if psychologist_signed_in?
@@ -14,33 +14,28 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = Appointment.new
-    if current_patient
-      # Coletar consultas disponíveis e reservadas
-      @available_appointments = Appointment.available.where("start_time >= ?", Time.zone.now)
-      @booked_appointments = Appointment.booked.where("start_time >= ?", Time.zone.now)
-
-      # Formatar datas e horários para o Flatpickr
-      @available_dates = @available_appointments.map { |appt| appt.start_time.strftime("%Y-%m-%dT%H:%M") }
-      @booked_dates = @booked_appointments.map { |appt| appt.start_time.strftime("%Y-%m-%dT%H:%M") }
-    else
-      redirect_to root_path, alert: "Você não tem permissão para criar consultas."
-    end
+    @available_dates = Appointment.where(status: 'available').pluck(:start_time)
+    @booked_dates = Appointment.where(status: 'booked').pluck(:start_time)
   end
 
 
+
   def create
+    Rails.logger.debug "Appointment Params: #{appointment_params}"
+
     if current_patient
-      # Paciente está tentando marcar uma consulta
-      @appointment = Appointment.find_by(start_time: appointment_params[:start_time], status: 'available')
+      start_time_param = appointment_params[:start_time]
+
+      Rails.logger.debug "Start Time Param: #{start_time_param}"
+
+      @appointment = Appointment.find_by(start_time: start_time_param, status: 'available')
 
       if @appointment && @appointment.update(patient: current_patient, status: 'booked')
         redirect_to profile_patient_path(current_patient), notice: 'Consulta marcada com sucesso!'
       else
         redirect_to new_patient_appointment_path(patient_id: current_patient.id), alert: 'Este horário não está disponível.'
       end
-
     elsif current_psychologist
-      # Psicólogo está tentando criar um novo slot de consulta
       @appointment = current_psychologist.appointments.new(appointment_params)
       @appointment.status = 'available'
 
@@ -51,6 +46,7 @@ class AppointmentsController < ApplicationController
       end
     end
   end
+
 
   def book
     @appointment = Appointment.find(params[:id])

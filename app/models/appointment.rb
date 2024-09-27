@@ -5,9 +5,11 @@ class Appointment < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
   validate :end_after_start
+  validates :status, inclusion: { in: ['available', 'booked'] }
 
   enum status: { available: 0, booked: 1, canceled: 2 }
-  scope :available, -> { where(patient_id: nil, status: :available) }
+  scope :available, -> { where(status: :available, patient_id: nil) }
+  scope :booked, -> { where(status: :booked) }
 
   after_save :send_notification_to_psychologist, if: -> { status_changed? && booked? }
 
