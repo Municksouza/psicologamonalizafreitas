@@ -1,77 +1,35 @@
-.new-appointement {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-  min-height: 100vh;
-  justify-content: center;
-  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
-  position: relative; /* Para o posicionamento da imagem */
+/* Estilo para a lista rolável */
+.scrollable-list {
+  max-height: 400px; /* Defina a altura máxima da área rolável */
+  overflow-y: auto;  /* Habilitar a rolagem vertical */
+  padding-right: 10px; /* Adicionar um pequeno padding para a rolagem */
+  padding-left: 10px; /* Padding para a esquerda também */
+  margin-top: 20px; /* Espaço superior para a lista */
 }
 
-h1 {
-  font-size: 3rem; /* Aumentar o tamanho do título */
-  color: #343a40;
-  text-align: center;
-  margin-bottom: 50px; /* Maior espaçamento abaixo do título */
-}
+// /* Estilo dos cards de consulta */
+// .card-show {
+//   border: 1px solid #ddd; /* Borda ao redor do card */
+//   padding: 15px;          /* Espaço interno do card */
+//   border-radius: 5px;     /* Arredondamento dos cantos */
+//   background-color: #fff; /* Cor de fundo branco */
+//   margin-bottom: 20px;    /* Espaço entre os cards */
+//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para o card */
+// }
 
-/* Estilo para o calendário */
-#calendar {
-  width: 90%; /* Diminui o tamanho do calendário */
-  max-width: 900px; /* Ajusta o tamanho máximo do calendário */
-  margin: 0 auto;
-  border: 3px solid #dedede; /* Bordas mais grossas para destaque */
-  padding: 20px; /* Ajuste de preenchimento para o calendário */
-  background-color: #fff;
-  border-radius: 16px; /* Cantos mais arredondados */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
-}
+// /* Estilo para o título da consulta */
+// .card-title-show {
+//   font-size: 18px;    /* Tamanho da fonte do título */
+//   font-weight: bold;  /* Negrito no título */
+//   margin-bottom: 10px; /* Espaço abaixo do título */
+// }
 
-/* Estilos para os botões */
-button.btn-primary, .btn.btn-primary {
-  background-color: #4b77be;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-button.btn-primary:hover, .btn.btn-primary:hover {
-  background-color: #2e5f9a;
-}
-
-button.btn-secondary, .btn.btn-secondary {
-  background-color: #777;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-button.btn-secondary:hover, .btn.btn-secondary:hover {
-  background-color: #555;
-}
-
-/* Alinhamento dos botões */
-.btn-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px; /* Maior espaço acima dos botões */
-}
-
-.btn-container .btn {
-  margin: 0 15px;
-}
-
-#btn-profile {
-  font-weight: bold;
-}
-
-/* Estilo para a imagem no canto inferior esquerdo */
-.home-image {
-  position: relative;
-  bottom: -80px;
-  left: auto;
-  right: 110px;
-  width: 100px;
-  height: auto;
-}
+// /* Estilo para o botão de cancelamento */
+// .btn-danger {
+//   background-color: #dc3545; /* Cor do botão de cancelamento */
+//   border-color: #dc3545;     /* Cor da borda */
+//   color: #fff;               /* Cor do texto */
+//   padding: 8px 15px;         /* Espaçamento interno do botão */
+//   border-radius: 5px;        /* Arredondamento dos cantos do botão */
+// }
+// 

@@ -2,24 +2,29 @@
   <!-- Consultas Marcadas -->
   <h1>Suas Consultas Marcadas</h1>
 
-  <% if @booked_appointments.any? %>
-    <% @booked_appointments.each do |appointment| %>
-      <div class="card-show">
-        <div class="card-body-show">
-          <h5 class="card-title-show">Consulta com <%= appointment.psychologist&.full_name || 'Sem psicólogo associado' %></h5>
-          <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
-          <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+  <div class="scrollable-list">
+    <% if @booked_appointments.any? %>
+      <% @booked_appointments.each do |appointment| %>
+        <div class="appointment-item">
+          <div class="card-show">
+            <div class="card-body-show">
+              <h5 class="card-title-show">Consulta com <%= appointment.psychologist&.full_name || 'Sem psicólogo associado' %></h5>
+              <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
+              <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
 
-          <!-- Exibir botão de cancelamento se a consulta ainda estiver agendada -->
-          <% if appointment.status == 'booked' %>
-            <%= button_to 'Cancelar Consulta', cancel_patient_appointment_patient_appointment_path(current_patient, appointment), method: :delete, class: 'btn btn-danger' %>
-          <% end %>
+              <!-- Exibir botão de cancelamento se a consulta ainda estiver agendada -->
+              <% if appointment.status == 'booked' %>
+                <%= button_to 'Cancelar Consulta', cancel_patient_appointment_patient_appointment_path(current_patient, appointment), method: :delete, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
+    <% else %>
+      <p>Você não tem consultas marcadas no momento.</p>
     <% end %>
-  <% else %>
-    <p>Você não tem consultas marcadas no momento.</p>
-  <% end %>
+  </div>
+
 
   <%= link_to 'Voltar para o Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
 </div>

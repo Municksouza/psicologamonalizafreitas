@@ -8,8 +8,11 @@ class Appointment < ApplicationRecord
   validates :status, inclusion: { in: ['available', 'booked'] }
 
   enum status: { available: 0, booked: 1, canceled: 2 }
-  scope :available, -> { where(status: :available, patient_id: nil) }
-  scope :booked, -> { where(status: :booked) }
+  scope :available, -> { where(status: 'available') }
+  scope :booked, -> { where(status: 'booked') }
+
+  # Escopo para compromissos finalizados
+  scope :completed, -> { where('start_time < ?', Time.zone.now).where(status: 'completed') }
 
   after_save :send_notification_to_psychologist, if: -> { status_changed? && booked? }
 

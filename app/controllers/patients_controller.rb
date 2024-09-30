@@ -4,8 +4,9 @@ class PatientsController < ApplicationController
 
   def profile
     @patient = current_patient
-    @appointments = @patient.appointments || [] # Garante que @appointments nunca será nil
-    @appointment = Appointment.where(status: "available").first # Consulta disponível
+    @booked_appointments = current_patient.appointments.where(status: 'booked')
+    @completed_appointments = current_patient.appointments.where(status: 'completed')
+    @testimonials = current_patient.testimonials
   end
 
   def show

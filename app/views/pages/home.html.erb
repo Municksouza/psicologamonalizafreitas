@@ -13,39 +13,56 @@
             <%= image_tag "logo2.png", loading: "lazy", class: "logo2" %>
           </div>
         </div>
-        <!-- Welcome text -->
-          <p class="top-content mb-2">
-            Bem-vindo ao Seu Espaço de Crescimento e Expressão Pessoal
-          </p>
-        <!-- Subtitle Content -->
-          <p class="subtitle-content mb-4">
-            Como psicóloga, meu objetivo é ajudar você a desenvolver habilidades sociais e melhorar sua comunicação, promovendo o bem-estar emocional e a conexão interpessoal. Ofereço um ambiente seguro e acolhedor para explorar seus pensamentos e sentimentos, encontrando caminhos para uma vida mais equilibrada e satisfatória.
-          </p>
-        <div>
 
-          <!-- Available Appointments Section -->
+        <!-- Welcome text -->
+        <p class="top-content mb-2">
+          Bem-vindo ao Seu Espaço de Crescimento e Expressão Pessoal
+        </p>
+
+        <!-- Subtitle Content -->
+        <p class="subtitle-content mb-4">
+          Como psicóloga, meu objetivo é ajudar você a desenvolver habilidades sociais e melhorar sua comunicação, promovendo o bem-estar emocional e a conexão interpessoal. Ofereço um ambiente seguro e acolhedor para explorar seus pensamentos e sentimentos, encontrando caminhos para uma vida mais equilibrada e satisfatória.
+        </p>
+
+        <!-- Show content based on the logged-in user -->
+        <div>
           <% if psychologist_signed_in? %>
-            <!-- List appointments created by the psychologist -->
-            <% @appointments.each do |appointment| %>
-              <p>
-                <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %> - <%= appointment.end_time.strftime("%B %d, %Y %H:%M") %>
-                <%= link_to 'Edit', edit_appointment_path(appointment) %>
-                <%= link_to 'Delete', appointment_path(appointment), method: :delete, data: { confirm: 'Are you sure?' } %>
-              </p>
-            <% end %>
-            <%= link_to 'New Appointment Slot', new_appointment_path, class: "booking-btn"%>
-          <% elsif patient_signed_in? %>
-            <!-- List available appointments for the patient -->
-            <% @appointments.each do |appointment| %>
-              <% if appointment.status == 'available' %>
-                <p>
-                  <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %> - <%= appointment.end_time.strftime("%B %d, %Y %H:%M") %>
-                  <%= link_to 'Marque sua Consulta', new_patient_session_path(@appointment), method: :patch, class: "booking-btn" %>
-                </p>
+            <!-- Psychologist Section -->
+            <h1>Todos os Compromissos</h1>
+            <% if @appointments.any? %>
+              <% @appointments.each do |appointment| %>
+                <div class="appointment-item">
+                  <p>
+                    <strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %> - <%= appointment.end_time.strftime("%d/%m/%Y %H:%M") %>
+                  </p>
+                  <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                  <%= link_to 'Editar', edit_appointment_path(appointment), class: "btn btn-secondary" %>
+                  <%= link_to 'Deletar', appointment_path(appointment), method: :delete, data: { confirm: 'Tem certeza?' }, class: "btn btn-danger" %>
+                </div>
               <% end %>
+            <% else %>
+              <p>Nenhum compromisso disponível.</p>
+            <% end %>
+            <%= link_to 'Novo Horário de Consulta', new_appointment_path, class: "btn btn-primary" %>
+
+          <% elsif patient_signed_in? %>
+            <!-- Patient Section -->
+            <% if @booked_appointments.present? && @booked_appointments.any? %>
+              <% @booked_appointments.each do |appointment| %>
+                <div class="appointment-item">
+                  <p>
+                    <strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %> - <%= appointment.end_time.strftime("%d/%m/%Y %H:%M") %>
+                  </p>
+                  <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                  <%= link_to 'Cancelar Consulta', cancel_patient_appointment_patient_appointment_path(current_patient, appointment), method: :delete, class: "btn btn-danger" %>
+                </div>
+              <% end %>
+            <% else %>
+              <%= link_to 'Ver consultas', patient_appointments_path(current_patient), class: 'btn btn-primary' %></p>
             <% end %>
           <% else %>
-            <%= link_to "Marque sua consulta",  new_patient_registration_path, class: "booking-btn" %>
+            <!-- Non-logged-in users -->
+            <%= link_to "Marque sua consulta", new_patient_registration_path, class: "btn btn-primary" %>
           <% end %>
         </div>
       </div>
@@ -68,6 +85,7 @@
     </p>
   </div>
 
+  <!-- Carousel -->
   <div class="carousel-container">
     <div class="vector-top-left">
       <%= image_tag 'vector.png', alt: 'Vector Top Left', class: 'vector' %>
@@ -104,8 +122,7 @@
     </div>
   </div>
 
-
-  <div class=" d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
+  <div class="d-flex flex-column justify-content-center align-items-center mb-5 gold-banner">
     <h2 class="banner-title">Depoimentos</h2>
     <p class="banner-text">
       Nesta seção, você encontrará palavras de pacientes que compartilham suas experiências com Monaliza. Cada depoimento reflete a jornada pessoal de alguém em busca de apoio emocional, autoconhecimento e bem-estar. Leia o que nossos pacientes têm a dizer sobre como Monaliza os ajudou a superar desafios, encontrar equilíbrio e fortalecer sua saúde mental. Essas histórias reais são um testemunho do impacto positivo e transformador do cuidado psicológico.

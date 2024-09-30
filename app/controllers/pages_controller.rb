@@ -4,8 +4,9 @@ class PagesController < ApplicationController
   def home
     if psychologist_signed_in?
       @appointments = current_psychologist.appointments
-    elsif patient_signed_in?
-      @appointments = Appointment.where(status: 'available') # Fetch only available appointments for patients
+      if patient_signed_in?
+        @booked_appointments = Appointment.booked.where(patient_id: current_patient.id)
+      end
     else
       @appointments = [] # Empty array to avoid nil errors in the view
     end

@@ -9,6 +9,8 @@ class AppointmentsController < ApplicationController
     elsif patient_signed_in?
       @available_appointments = Appointment.available.where('start_time >= ?', Time.zone.now)
       @booked_appointments = Appointment.booked.where(patient_id: current_patient.id)
+      @completed_appointments = current_patient.appointments.where(status: 'completed')
+
     end
   end
 

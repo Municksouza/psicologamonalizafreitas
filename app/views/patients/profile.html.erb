@@ -2,6 +2,7 @@
   <div class="vector-top-left">
     <%= image_tag 'vector4.png', alt: 'Vector Top Left', class: 'vector-left' %>
   </div>
+
   <!-- Section for Profile Information -->
   <div class="patient-header">
     <div class="container d-flex align-items-center justify-content-between">
@@ -9,17 +10,14 @@
         <h1 class="welcome-text">Bem-vindo(a), <%= current_patient.full_name %>!</h1>
         <p>Cuide da sua saúde mental com a nossa plataforma.</p>
         <div class="personal-info">
-          <p><strong>Email:</strong> <%= @patient.email %></p>
-          <p><strong>Telefone:</strong> <%= @patient.phone_number %></p>
-          <p><strong>Endereço:</strong> <%= @patient.address %></p>
+          <p><strong>Email:</strong> <%= current_patient.email %></p>
+          <p><strong>Telefone:</strong> <%= current_patient.phone_number %></p>
+          <p><strong>Endereço:</strong> <%= current_patient.address %></p>
         </div>
         <%= link_to "Alterar Senha", edit_patient_registration_path, class: "info-btn" %>
-        <% if @appointment.present? %>
-        <%= link_to "Marcar Consulta", new_patient_appointment_path(@appointment), class: "info-btn" %>
-        <% else %>
-          <p>Não há consultas disponíveis para marcar no momento.</p>
-        <% end %>
+        <%= link_to "Marcar Consulta", new_patient_appointment_path(current_patient), class: "info-btn" %>
       </div>
+
       <!-- Section for Patient's Picture and "Group1" Image -->
       <div class="patient-picture-container">
         <!-- Patient's Picture -->
@@ -35,22 +33,22 @@
     </div>
   </div>
 
-
   <!-- Section for Appointments and Previous Appointments -->
   <div class="row align-items-center h-100">
-
-    <!-- Section for Appointments -->
+    <!-- Section for Booked Appointments -->
     <div class="col-md-6 d-flex flex-column align-items-start justify-content-center">
       <div class="appointments-section container">
         <h2>Seus Compromissos</h2>
         <div class="scrollable-list">
-          <% if @appointments.present? %>
+          <% if @booked_appointments.present? %>
             <div class="appointments-list">
-              <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
-                <div class="appointment-item">
-                  <p><strong>Data:</strong> <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %></p>
-                  <p><strong>Status:</strong> <%= appointment.status %></p>
-                  <%= link_to 'Ver Detalhes', patient_appointments_path(current_patient, appointment), class: "info-btn" %>
+              <% @booked_appointments.order(created_at: :desc).each do |appointment| %>
+                <div class="appointment-item card">
+                  <div class="card-body">
+                    <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
+                    <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                    <%= link_to 'Ver Detalhes', patient_appointments_path(current_patient, appointment), class: "info-btn" %>
+                  </div>
                 </div>
               <% end %>
             </div>
@@ -61,17 +59,19 @@
       </div>
     </div>
 
-    <!-- Section for Previous Appointments -->
+    <!-- Section for Completed Appointments -->
     <div class="col-md-6 d-flex justify-content-center">
       <div class="previous-appointments-section container">
         <h2>Compromissos Anteriores</h2>
         <div class="scrollable-list">
-          <% if @appointments.present? %>
-            <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
-              <div class="appointment-item">
-                <p><strong>Data:</strong> <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %></p>
-                <p><strong>Status:</strong> <%= appointment.status %></p>
-                <%= link_to "Ver Detalhes", patient_appointments_path(current_patient, appointment), class: "info-btn mt-2" %>
+          <% if @completed_appointments.present? %>
+            <% @completed_appointments.order(created_at: :desc).each do |appointment| %>
+              <div class="appointment-item card">
+                <div class="card-body">
+                  <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
+                  <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                  <%= link_to 'Ver Detalhes', patient_appointment_path(current_patient, appointment), class: "info-btn" %>
+                </div>
               </div>
             <% end %>
           <% else %>
@@ -82,6 +82,7 @@
     </div>
   </div>
 
+  <!-- Section for Testimonials -->
   <div class="patient-testimonials-section container mt-5">
     <h2>Depoimentos de <%= current_patient.full_name %></h2>
     <div class="scrollable-list">
@@ -109,13 +110,15 @@
       <% else %>
         <p>Nenhum depoimento escrito ainda.</p>
       <% end %>
+
       <!-- Botão para adicionar novo depoimento -->
       <div class="mt-4">
         <%= link_to "Adicionar Depoimento", new_testimonial_path(current_patient), class: "btn btn-primary" %>
       </div>
-      </div> <!-- Fechando corretamente o div da scrollable-list -->
+    </div>
+  </div>
 
-      <div class="vector-top-right">
-        <%= image_tag 'vector.png', alt: 'Vector Top Left', class: 'vector-right' %>
-      </div>
+  <div class="vector-top-right">
+    <%= image_tag 'vector.png', alt: 'Vector Top Left', class: 'vector-right' %>
+  </div>
 </div>
