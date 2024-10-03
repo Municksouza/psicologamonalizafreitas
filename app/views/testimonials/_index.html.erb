@@ -8,8 +8,7 @@
     <% end %>
   </ol>
 
-  <div class="carousel-inner">
-    <!-- Carousel Items -->
+  <div class="carousel-inner-home">
     <% if @testimonials.present? %>
       <% @testimonials.each_with_index do |testimonial, index| %>
         <div class="carousel-item <%= 'active' if index.zero? %>">
@@ -35,10 +34,8 @@
               <p class="card-text"><%= testimonial.content %></p>
 
               <!-- Edit and Delete Buttons (for Patients and Psychologists) -->
-              <% if patient_signed_in? || psychologist_signed_in? %>
-                <% if current_patient == testimonial.patient || psychologist_signed_in? %>
-                  <%= link_to 'Delete', testimonial_path(testimonial), method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger btn-sm' %>
-                <% end %>
+              <% if current_patient == testimonial.patient || psychologist_signed_in? %>
+                <%= link_to 'Delete', testimonial_path(testimonial), method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger btn-sm' %>
               <% end %>
             </div>
           </div>
@@ -48,14 +45,4 @@
       <p>No testimonials available.</p>
     <% end %>
   </div>
-
-  <!-- Carousel Controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
