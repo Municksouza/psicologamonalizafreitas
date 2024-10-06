@@ -1,0 +1,24 @@
+.booked-date {
+  background-color: #ffcccb; /* Highlight booked dates */
+  color: white;
+}
+
+.available-date {
+  background-color: #c8e6c9; /* Highlight available dates */
+  color: black;
+}
+
+// Media query for tablets (up to 768px)
+@media (max-width: 768px) {
+  .booked-date, .available-date {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+}
+
+// Media query for mobile (up to 480px)
+@media (max-width: 480px) {
+  .booked-date, .available-date {
+    font-size: 12px; /* Further adjust font size for mobile */
+    padding: 8px; /* Increase padding for better touch support */
+  }
+}

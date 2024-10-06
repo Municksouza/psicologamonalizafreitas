@@ -4,12 +4,13 @@ class PagesController < ApplicationController
   def home
     if psychologist_signed_in?
       @appointments = current_psychologist.appointments
-    elsif patient_signed_in?
-      @appointments = Appointment.where(status: "available")
+      if patient_signed_in?
+        @booked_appointments = Appointment.booked.where(patient_id: current_patient.id)
+      end
     else
-      @appointments = []
+      @appointments = [] # Empty array to avoid nil errors in the view
     end
-
+    @testimonials = Testimonial.all.order(created_at: :desc)
     Rails.logger.debug "Type of @appointments: #{@appointments.class}"
     Rails.logger.debug "@appointments content: #{@appointments.inspect}"
   end
@@ -35,10 +36,8 @@ class PagesController < ApplicationController
   private
 
   def authenticate_patient_or_psychologist!
-    if !patient_signed_in? && !psychologist_signed_in?
+    unless patient_signed_in? || psychologist_signed_in?
       redirect_to new_patient_session_path
-    elsif !patient_signed_in? && psychologist_signed_in?
-      redirect_to new_psychologist_session_path
     end
   end
 end

@@ -10,6 +10,11 @@ require 'rails_helper'
 #     end
 #   end
 # end
+
 RSpec.describe TestimonialsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#some_helper_method' do
+    it 'returns the expected value' do
+      expect(helper.some_helper_method).to eq('expected value') # Update the expectation
+    end
+  end
 end

@@ -1,16 +1,12 @@
-# config/importmap.rb
-pin "@hotwired/turbo-rails", to: "turbo.min.js"
-pin "@popperjs/core", to: "popper.min.js"
-pin "bootstrap", to: "bootstrap.min.js"
-pin "@rails/actioncable", to: "actioncable.min.js"
-pin "controllers", to: "controllers.js"
+# Pin npm packages by running ./bin/importmap
 pin "application", preload: true
-pin "@hotwired/stimulus", to: "stimulus.min.js"
-pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
-pin "@fullcalendar/core", to: "@fullcalendar--core.js" # @6.1.15
-pin "preact" # @10.12.1
-pin "preact/compat", to: "preact--compat.js" # @10.12.1
-pin "preact/hooks", to: "preact--hooks.js" # @10.12.1
-pin "@fullcalendar/daygrid", to: "@fullcalendar--daygrid.js" # @6.1.15
-pin "@fullcalendar/timegrid", to: "@fullcalendar--timegrid.js" # @6.1.15
-pin "@fullcalendar/interaction", to: "@fullcalendar--interaction.js" # @6.1.15
+pin "@hotwired/turbo-rails", to: "turbo.min.js", preload: true
+pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
+pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
+pin_all_from "app/javascript/controllers", under: "controllers"
+pin "@rails/actioncable", to: "actioncable.esm.js"
+pin "flatpickr" # @4.6.13
+# Pin external libraries like Bootstrap and jQuery
+pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js", preload: true
+pin "jquery", to: "https://code.jquery.com/jquery-3.6.0.min.js", preload: true
+pin "process", to: "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process-production.js"

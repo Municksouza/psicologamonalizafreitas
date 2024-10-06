@@ -1,0 +1,6 @@
+<h1>Add a Testimonial</h1>
+
+<%= simple_form_for([@psychologist, @testimonial]) do |f| %>
+  <%= f.input :content, label: 'Your Testimonial', as: :text %>
+  <%= f.submit 'Submit', class: 'btn btn-primary' %>
+<% end %>

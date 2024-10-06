@@ -1,78 +1,90 @@
-/* Ajuste de espaçamento nas bordas para imagens e containers */
+/* Estilos da Imagem */
 .img-1 {
   max-width: 100%;
   height: auto;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin: 40px; /* Aumenta o espaçamento ao redor da imagem */
+  margin: 40px;
 }
 
+/* Estilo do Container de Conteúdo */
 .content-container {
-  width: 90%; /* Diminui a largura total para criar espaço nas bordas */
-  padding: 40px; /* Aumenta o padding interno */
-  margin: 40px auto; /* Centraliza e cria espaçamento nas bordas */
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  padding: 40px;
+  margin: 40px auto;
   background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
   font-family: "Inknut Antiqua";
 }
 
+/* Estilo das Imagens */
 .content-ima {
   width: 100%;
   height: auto;
   padding: 20px;
+  margin-top: 40px;
 }
 
+/* Estilo dos Botões */
 .booking-btn {
   display: inline-flex;
   height: 58px;
   padding: 16px 48px;
   align-items: center;
   gap: 12px;
-  flex-shrink: 0;
-  background: #FFD700;
+  background: #28697E; /* Botão azul médio */
+  color: #fff;
   font-family: "Inknut Antiqua";
   font-size: 18px;
   font-weight: 700;
   line-height: 24px;
-  color: #00F;
   visibility: visible;
   opacity: 1;
-  margin-top: 20px; /* Adiciona espaçamento acima do botão */
+  margin-top: 20px;
+  &:hover {
+    background-color: #86B3D1; /* Hover azul claro */
+  }
 }
 
 .subtitle-content {
   font-family: 'Inknut Antiqua', serif;
-  margin: 20px 0; /* Aumenta o espaçamento vertical */
+  margin: 20px 0;
+  color: #5F6366; /* Cinza */
 }
 
+/* Estilo da Logo */
 .logo2 {
   max-width: 100%;
   height: auto;
-  margin-bottom: 30px; /* Aumenta o espaçamento abaixo da logo */
+  margin-bottom: 30px;
+  display: block;
 }
 
 .profile-content {
   position: relative;
   display: inline-block;
-  max-width: 700px;
-  margin: 20px auto; /* Centraliza o conteúdo do perfil e adiciona espaçamento */
+  max-width: 1000px;
+  margin: 20px auto;
 }
 
 .color-layer {
-  content: '';
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px; /* Ajuste este valor conforme necessário */
+  left: 20px; /* Ajuste este valor conforme necessário */
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background-color: gold;
+  background-color: #EDB5BF; /* Rosa */
   z-index: 1;
-  transform: translate(20px, 20px);
+  transform: none; /* Removendo o translate para alinhar corretamente */
 }
 
 .layer-two {
-  background-color: #0000FF;
-  transform: translate(40px, 40px);
+  position: absolute;
+  top: 40px; /* Ajuste este valor conforme necessário */
+  left: 40px; /* Ajuste este valor conforme necessário */
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #28697E; /* Azul */
   z-index: 0;
 }
 
@@ -83,99 +95,65 @@
   position: relative;
   z-index: 2;
   border-radius: 10px;
-  margin-top: 20px; /* Espaçamento acima da imagem do perfil */
+  margin: 0; /* Removendo o margin-top para evitar deslocamento da imagem */
 }
 
+
+/* Estilo do Avatar */
 .avatar-home {
   max-width: 120%;
   height: auto;
   object-fit: contain;
 }
 
-/* Ajuste do Gold Banner */
+/* Estilo do Banner */
 .gold-banner {
-  background: linear-gradient(90deg, #F0F0F0 0%, #F5DEB3 100%);
-  padding: 40px; /* Aumenta o padding interno */
+  position: relative;
+  background: linear-gradient(90deg, #86B3D1 0%, #28697E 100%);
+  padding: 40px;
   border-radius: 15px;
-  margin-top: 200px; /* Espaçamento superior aumentado */
-  margin-left: 40px; /* Espaçamento nas bordas à esquerda */
-  margin-right: 40px; /* Espaçamento nas bordas à direita */
+  margin-top: 150px;
   text-align: center;
+  color: #fff;
+  overflow: hidden;
+  width: 100vw; /* Largura total */
+  margin-left: calc(50% - 50vw); /* Centraliza na página */
 }
 
-/* Ajustes Responsivos para telas maiores */
-@media (min-width: 1200px) {
-  .gold-banner {
-    margin-top: 15vh;
-    padding: 50px;
-  }
-
-  .profile-content {
-    max-width: 900px;
-  }
-
-  .booking-btn {
-    font-size: 20px;
-    padding: 18px 60px;
-  }
+.gold-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-image: url('https://cuidadosamente.com/wp-content/uploads/2022/03/terapia-psicologica-en-linea.webp');
+  border-radius: 100% 100% 0 0;
 }
 
-/* Media Queries para telas menores */
 
-/* Tablets e dispositivos menores */
-@media (max-width: 768px) {
-  .booking-btn {
-    padding: 12px 24px;
-    font-size: 16px;
-  }
-
-  .profile-content {
-    max-width: 100%;
-  }
-
-  .gold-banner {
-    margin-top: 120px;
-    padding: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
-  .banner-title {
-    font-size: 20px;
-  }
-
-  .banner-text {
-    font-size: 16px;
-  }
+.banner-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
-/* Smartphones */
-@media (max-width: 576px) {
-  .img-1 {
-    margin: 10px;
-  }
+.banner-text {
+  font-size: 1.25rem;
+}
 
-  .booking-btn {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
+/* Style for the logo container */
+.logo-container {
+  position: relative;
+}
 
-  .profile-content {
-    padding: 10px;
-  }
+/* Style for the sparkle image */
+.sparkle-container {
+  position: absolute;
+  top: -30px; /* Adjust this value to position it above the logo */
+  left: -30px; /* Adjust this value to position it to the left of the logo */
+}
 
-  .gold-banner {
-    margin-top: 80px;
-    padding: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .banner-title {
-    font-size: 18px;
-  }
-
-  .banner-text {
-    font-size: 14px;
-  }
+/* Additional styles */
+.top-content {
+  margin-top: 20px; /* Adjust as needed */
 }

@@ -1,114 +1,95 @@
 class AppointmentsController < ApplicationController
-  before_action :authenticate_psychologist!, only: [ :edit, :update, :destroy, :create ]
-  before_action :authenticate_patient!, only: [ :new, :create, :update, :cancel, :book ]
+  before_action :authenticate_psychologist!, only: [ :edit, :update, :destroy ]
+  before_action :authenticate_patient!, only: [ :new, :create, :cancel, :book ]
   before_action :set_appointment, only: [ :edit, :update, :destroy, :cancel, :book ]
-  protect_from_forgery with: :exception, unless: -> { request.format.json? }
-  before_action :set_csrf_cookie_for_ng
 
-  # Fetch appointments for FullCalendar in JSON format
-  def index_json
-    @appointments = Appointment.where("start_time >= ? AND end_time <= ?", params[:start], params[:end])
+  def index
+    if psychologist_signed_in?
+      @appointments = current_psychologist.appointments
+    elsif patient_signed_in?
+      @available_appointments = Appointment.available.where("start_time >= ?", Time.zone.now)
+      @booked_appointments = Appointment.booked.where(patient_id: current_patient.id)
+      @completed_appointments = current_patient.appointments.where(status: "completed")
 
-    render json: @appointments.map { |appointment|
-      {
-        id: appointment.id,
-        title: appointment.patient ? "#{appointment.patient.full_name}" : "Available",
-        start: appointment.start_time.iso8601,
-        end: appointment.end_time.iso8601,
-        status: appointment.status,
-        color: appointment.patient ? "#ff9f89" : "#3a87ad"  # Corrected quotes
-      }
-    }
+    end
   end
 
-  # Create action (handles both booking and slot creation)
+  def new
+    @appointment = Appointment.new
+    @available_dates = Appointment.where(status: "available").pluck(:start_time)
+    @booked_dates = Appointment.where(status: "booked").pluck(:start_time)
+  end
+
+
+
   def create
-    if current_psychologist
-      # Creating a new appointment slot by a psychologist
+    Rails.logger.debug "Appointment Params: #{appointment_params}"
+
+    if current_patient
+      start_time_param = appointment_params[:start_time]
+
+      Rails.logger.debug "Start Time Param: #{start_time_param}"
+
+      @appointment = Appointment.find_by(start_time: start_time_param, status: "available")
+
+      if @appointment && @appointment.update(patient: current_patient, status: "booked")
+        redirect_to profile_patient_path(current_patient), notice: "Consulta marcada com sucesso!"
+      else
+        redirect_to new_patient_appointment_path(patient_id: current_patient.id), alert: "Este horário não está disponível."
+      end
+    elsif current_psychologist
       @appointment = current_psychologist.appointments.new(appointment_params)
-      @appointment.status = "available"  # Mark it as available
+      @appointment.status = "available"
 
       if @appointment.save
-        render json: @appointment, status: :created
+        redirect_to profile_psychologist_path(current_psychologist), notice: "Disponibilidade de consulta criada com sucesso!"
       else
-        render json: @appointment.errors, status: :unprocessable_entity
+        render :new, alert: "Erro ao criar a disponibilidade de consulta."
       end
     end
   end
 
-  # Method to allow patients to book available appointments
+
   def book
-    if current_patient
-      # Booking an available appointment
-      if @appointment.status == "available" && @appointment.patient.nil?
-        if @appointment.update(patient: current_patient, status: "booked")
-          respond_to do |format|
-            format.json { render json: { message: "Appointment booked successfully!" }, status: :ok }
-            format.html { redirect_to patient_appointments_path(current_patient), notice: "Appointment booked successfully!" }
-          end
-        else
-          respond_to do |format|
-            format.json { render json: { errors: @appointment.errors.full_messages }, status: :unprocessable_entity }
-            format.html { render :new }
-          end
-        end
-      else
-        respond_to do |format|
-          format.json { render json: { error: "This appointment is no longer available." }, status: :unprocessable_entity }
-          format.html { redirect_to new_patient_appointment_path, alert: "This appointment is no longer available." }
-        end
-      end
+    @appointment = Appointment.find(params[:id])
+
+    if @appointment.available?
+      @appointment.update(patient: current_patient, status: "booked")
+      redirect_to patient_appointments_path(current_patient), notice: "Consulta marcada com sucesso!"
+    else
+      redirect_to new_patient_appointment_path, alert: "Este horário já está reservado."
     end
   end
 
-  # Cancel action for patients to cancel their appointment
   def cancel
-    if current_patient == @appointment.patient
-      @appointment.update(patient: nil, status: "available")
-      respond_to do |format|
-        format.json { render json: { message: "Appointment canceled successfully." }, status: :ok }
-        format.html { redirect_to patient_appointments_path(current_patient), notice: "Appointment canceled successfully." }
-      end
-    else
-      respond_to do |format|
-        format.json { render json: { error: "You are not authorized to cancel this appointment." }, status: :unauthorized }
-        format.html { redirect_to patient_appointments_path(current_patient), alert: "You are not authorized to cancel this appointment." }
-      end
-    end
-  end
+    @appointment = Appointment.find(params[:id])
 
-  # Edit and update action for psychologists
-  def edit
-    if psychologist_signed_in?
-      # Psychologist can edit the appointment
+    if @appointment.patient == current_patient
+      @appointment.update(patient: nil, status: "available")
+      redirect_to patient_appointments_path(current_patient), notice: "Consulta cancelada com sucesso!"
     else
-      redirect_to root_path, alert: "Access denied"
+      redirect_to appointments_path, alert: "Você não tem autorização para cancelar esta consulta."
     end
   end
 
   def update
     if psychologist_signed_in?
       if @appointment.update(appointment_params)
-        respond_to do |format|
-          format.json { render json: { message: "Appointment updated successfully." }, status: :ok }
-          format.html { redirect_to appointments_path, notice: "Appointment updated successfully." }
-        end
+        redirect_to appointments_path, notice: "Consulta atualizada com sucesso!"
       else
-        respond_to do |format|
-          format.json { render json: @appointment.errors, status: :unprocessable_entity }
-          format.html { render :edit }
-        end
+        render :edit, alert: "Erro ao atualizar a consulta."
       end
+    else
+      redirect_to root_path, alert: "Acesso negado."
     end
   end
 
-  # Destroy action for psychologists to delete appointment slots
   def destroy
-    if current_psychologist == @appointment.psychologist
+    if psychologist_signed_in? && @appointment.psychologist == current_psychologist
       @appointment.destroy
-      render json: { message: "Appointment slot deleted successfully." }, status: :ok
+      redirect_to appointments_path, notice: "Consulta excluída com sucesso."
     else
-      render json: { error: "You are not authorized to delete this appointment slot." }, status: :unauthorized
+      redirect_to appointments_path, alert: "Você não tem permissão para excluir essa consulta."
     end
   end
 
@@ -120,9 +101,5 @@ class AppointmentsController < ApplicationController
 
   def appointment_params
     params.require(:appointment).permit(:start_time, :end_time)
-  end
-
-  def set_csrf_cookie_for_ng
-    cookies["CSRF-TOKEN"] = form_authenticity_token if protect_against_forgery?
   end
 end

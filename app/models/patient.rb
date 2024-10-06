@@ -5,9 +5,10 @@ class Patient < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :psychologist, optional: true
-  has_many :appointments, dependent: :destroy
+  has_many :appointments
   has_many :messages, dependent: :destroy
   has_one_attached :photo
+  has_many :testimonials
 
   validates :address, presence: true
   validates :date_of_birth, presence: true

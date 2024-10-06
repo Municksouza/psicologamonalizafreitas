@@ -1,5 +1,17 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Testimonial, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    it "is valid with valid attributes" do
+      patient = create(:patient)
+      psychologist = create(:psychologist)
+      testimonial = Testimonial.new(content: "Great service", patient: patient, psychologist: psychologist)
+      expect(testimonial).to be_valid
+    end
+
+    it "is not valid without content" do
+      testimonial = Testimonial.new(content: nil)
+      expect(testimonial).not_to be_valid
+    end
+  end
 end

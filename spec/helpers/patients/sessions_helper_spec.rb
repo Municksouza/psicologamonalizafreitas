@@ -10,6 +10,13 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe Patients::SessionsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+
+RSpec.describe "Patients::Sessions", type: :request do
+  describe "GET /new" do
+    it "returns a successful response" do
+      get new_patient_session_path
+      expect(response).to have_http_status(:success)
+    end
+  end
 end

@@ -1,4 +1,7 @@
 <div class="patient-page" data-controller="patients" data-patients-userid-value="<%= current_patient.id %>">
+  <div class="vector-top-left">
+    <%= image_tag 'vector4.png', alt: 'Vector Top Left', class: 'vector-left' %>
+  </div>
 
   <!-- Section for Profile Information -->
   <div class="patient-header">
@@ -7,73 +10,119 @@
         <h1 class="welcome-text">Bem-vindo(a), <%= current_patient.full_name %>!</h1>
         <p>Cuide da sua saúde mental com a nossa plataforma.</p>
         <div class="personal-info">
-          <p><strong>Email:</strong> <%= @patient.email %></p>
-          <p><strong>Telefone:</strong> <%= @patient.phone_number %></p>
-          <p><strong>Endereço:</strong> <%= @patient.address %></p>
+          <p><strong>Email:</strong> <%= current_patient.email %></p>
+          <p><strong>Telefone:</strong> <%= current_patient.phone_number %></p>
+          <p><strong>Endereço:</strong> <%= current_patient.address %></p>
         </div>
-        <%= link_to 'Alterar Senha', edit_patient_registration_path, class: 'btn btn-primary' %>
       </div>
-      <div class="patient-picture">
-        <img src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" alt="Profile" class="img-fluid rounded-circle">
+
+      <!-- Section for Patient's Picture and "Group1" Image -->
+      <div class="patient-picture-container">
+        <!-- Patient's Picture -->
+        <div class="patient-picture">
+          <img src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" alt="Profile" class="img">
+        </div>
+
+        <!-- Group1 as "aspa" style -->
+        <div class="group1-aspa">
+          <%= image_tag 'group1.png', alt: 'Aspa Image', class: 'aspa-img' %>
+        </div>
+
+        <!-- Action Buttons under the patient picture -->
+        <div class="alterar-senha-btn">
+          <%= link_to "Alterar Senha",  edit_patient_registration_path, class: "info-btn mt-3" %>
+          <%= link_to "Marcar Consulta", new_patient_appointment_path(current_patient), class: "info-btn" %>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Section for Appointments -->
-  <div class="appointments-section container">
-    <h2>Seus Compromissos</h2>
-    <% if @appointments.present? %>
-      <div class="appointments-list">
-        <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
-          <div class="appointment-item">
-            <p><strong>Data:</strong> <%= appointment.start_time.strftime("%B %d, %Y %H:%M") %></p>
-            <p><strong>Status:</strong> <%= appointment.status %></p>
-            <!-- Corrigindo o link para detalhes da consulta -->
-            <%= link_to 'Ver Detalhes', patient_appointment_path(current_patient, appointment), class: 'btn btn-info' %>
-          </div>
-        <% end %>
+  <!-- Section for Appointments and Previous Appointments -->
+  <div class="row align-items-center h-100">
+    <!-- Section for Booked Appointments -->
+    <div class="col-md-6 d-flex flex-column align-items-start justify-content-center">
+      <div class="appointments-section container">
+        <h2>Seus Compromissos</h2>
+        <div class="scrollable-list">
+          <% if @booked_appointments.present? %>
+            <div class="appointments-list">
+              <% @booked_appointments.order(created_at: :desc).each do |appointment| %>
+                <div class="appointment-item card">
+                  <div class="card-body">
+                    <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
+                    <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                    <%= link_to 'Ver Detalhes', patient_appointments_path(current_patient, appointment), class: "info-btn" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p>Nenhum compromisso marcado ainda.</p>
+          <% end %>
+        </div>
       </div>
-    <% else %>
-      <p>Nenhum compromisso marcado ainda.</p>
-    <% end %>
+    </div>
 
-    <!-- Se houver consulta disponível para marcar -->
-    <% if @appointment.present? %>
-      <%= link_to 'Marcar Consulta', new_patient_appointment_path(@appointment), class: "btn btn-success" %>
-    <% else %>
-      <p>Não há consultas disponíveis para marcar no momento.</p>
-    <% end %>
+    <!-- Section for Completed Appointments -->
+    <div class="col-md-6 d-flex justify-content-center">
+      <div class="previous-appointments-section container">
+        <h2>Compromissos Anteriores</h2>
+        <div class="scrollable-list">
+          <% if @completed_appointments.present? %>
+            <% @completed_appointments.order(created_at: :desc).each do |appointment| %>
+              <div class="appointment-item card">
+                <div class="card-body">
+                  <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
+                  <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
+                  <%= link_to 'Ver Detalhes', patient_appointment_path(current_patient, appointment), class: "info-btn" %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p>Nenhum compromisso anterior registrado ainda.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Section for Testimonials -->
-  <div class="testimonials-section container">
-    <h2>Depoimentos</h2>
-    <p>Leia o que outros pacientes têm a dizer sobre nossas consultas:</p>
-    <%= render 'testimonials/index' %>
-  </div>
+  <div class="patient-testimonials-section container mt-5">
+    <h2>Depoimentos de <%= current_patient.full_name %></h2>
+    <div class="scrollable-list">
+      <% if current_patient.testimonials.present? %>
+        <% current_patient.testimonials.each do |testimonial| %>
+          <div class="testimonial-item d-flex align-items-start">
+            <!-- Foto do Psicólogo -->
+            <% if testimonial.psychologist.present? %>
+              <div class="psychologist-picture me-3">
+                <img src="<%= testimonial.psychologist.photo.attached? ? cl_image_path(testimonial.psychologist.photo.key) : asset_path("monaliza4.jpeg") %>" alt="Psychologist Photo" class="img-fluid rounded-circle">
+              </div>
+            <% end %>
 
-  <!-- Section for Previous Appointments -->
-  <div class="previous-appointments-section container">
-    <h2>Compromissos Anteriores</h2>
-    <div id="carouselPreviousAppointments" class="carousel slide">
-      <div class="carousel-inner">
-        <% @appointments.order(created_at: :desc).each_with_index do |appointment, index| %>
-          <div class="carousel-item <%= 'active' if index == 0 %>">
-            <div class="appointment-carousel-item">
-                <%= render 'patients/previous_appointment', appointment: appointment %>
+            <!-- Conteúdo do Depoimento -->
+            <div class="testimonial-content">
+              <p><strong>Data:</strong> <%= testimonial.created_at.strftime("%B %d, %Y") %></p>
+              <p><strong>Conteúdo:</strong> <%= testimonial.content %></p>
+              <% if testimonial.psychologist.present? %>
+                <p><strong>Referente ao Psicólogo:</strong> <%= testimonial.psychologist.full_name %></p>
+              <% end %>
+              <%= link_to "Excluir", testimonial_path(testimonial), method: :delete, data: { confirm: "Tem certeza que deseja excluir?" }, class: "info-btn" %>
             </div>
           </div>
         <% end %>
+      <% else %>
+        <p>Nenhum depoimento escrito ainda.</p>
+      <% end %>
+
+      <!-- Botão para adicionar novo depoimento -->
+      <div class="mt-4">
+        <%= link_to "Adicionar Depoimento", new_testimonial_path(current_patient), class: "btn btn-primary" %>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="carouselPreviousAppointments" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="carouselPreviousAppointments" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
   </div>
 
+  <div class="vector-top-right">
+    <%= image_tag 'vector.png', alt: 'Vector Top Left', class: 'vector-right' %>
+  </div>
 </div>

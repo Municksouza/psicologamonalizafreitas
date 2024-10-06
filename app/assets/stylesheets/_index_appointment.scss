@@ -1,0 +1,35 @@
+/* Estilo para a lista rolável */
+.scrollable-list {
+  max-height: 400px; /* Defina a altura máxima da área rolável */
+  overflow-y: auto;  /* Habilitar a rolagem vertical */
+  padding-right: 10px; /* Adicionar um pequeno padding para a rolagem */
+  padding-left: 10px; /* Padding para a esquerda também */
+  margin-top: 20px; /* Espaço superior para a lista */
+}
+
+// /* Estilo dos cards de consulta */
+// .card-show {
+//   border: 1px solid #ddd; /* Borda ao redor do card */
+//   padding: 15px;          /* Espaço interno do card */
+//   border-radius: 5px;     /* Arredondamento dos cantos */
+//   background-color: #fff; /* Cor de fundo branco */
+//   margin-bottom: 20px;    /* Espaço entre os cards */
+//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil para o card */
+// }
+
+// /* Estilo para o título da consulta */
+// .card-title-show {
+//   font-size: 18px;    /* Tamanho da fonte do título */
+//   font-weight: bold;  /* Negrito no título */
+//   margin-bottom: 10px; /* Espaço abaixo do título */
+// }
+
+// /* Estilo para o botão de cancelamento */
+// .btn-danger {
+//   background-color: #dc3545; /* Cor do botão de cancelamento */
+//   border-color: #dc3545;     /* Cor da borda */
+//   color: #fff;               /* Cor do texto */
+//   padding: 8px 15px;         /* Espaçamento interno do botão */
+//   border-radius: 5px;        /* Arredondamento dos cantos do botão */
+// }
+// 

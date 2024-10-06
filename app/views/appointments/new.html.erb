@@ -1,8 +1,48 @@
-<div id="calendar"></div>
-<%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
+<div class="new-appointment">
+  <% if psychologist_signed_in? %>
+    <h1>Adicione as Datas, Horas e Dias Disponíveis</h1>
+    <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
+      <label for="appointment_booking_date">Selecione um horário disponível:</label>
+      <input id="appointment_booking_date" class="form-control datepicker" readonly="readonly" type="text" name="appointment[start_time]"
+             data-booked-dates="<%= @booked_dates.to_json %>"
+             data-available-dates="<%= @available_dates.to_json %>">
+      <%= form.button :submit, 'Salvar Disponibilidade', class: 'btn btn-primary' %>
+    <% end %>
+  <% end %>
+
+  <% if patient_signed_in? %>
+    <h1>Marque Sua Consulta</h1>
+    <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
+      <label for="appointment_booking_date">Selecione uma data disponível:</label>
+      <input id="appointment_booking_date" class="form-control datepicker" readonly="readonly" type="text" name="appointment[start_time]"
+             data-booked-dates="<%= @booked_dates.to_json %>"
+             data-available-dates="<%= @available_dates.to_json %>">
+
+      <div id="timeSlotContainer" style="display: none;">
+        <label for="timeSelect">Horários disponíveis:</label>
+        <select id="timeSelect" class="form-control" name="appointment[start_time]">
+        </select>
+      </div>
+
+      <button id="submitButton" class="btn btn-primary" disabled>Marcar Consulta</button>
+    <% end %>
+  <% end %>
+</div>
 
 <% if psychologist_signed_in? %>
-  <h1>Create New Appointment Slots</h1>
-<% elsif patient_signed_in? %>
-  <h1>Book Available Appointments</h1>
+  <div class="container">
+    <h3>Configure sua página de agendamento</h3>
+    <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
+      <label for="appointment_booking_date">Selecione um horário disponível:</label>
+      <input id="appointment_booking_date" class="form-control datepicker" readonly="readonly" type="text" name="appointment[start_time]"
+             data-booked-dates="<%= @booked_dates.to_json %>"
+             data-available-dates="<%= @available_dates.to_json %>">
+      <%= form.button :submit, 'Marcar Consulta', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 <% end %>
+
+<div class="btn-container">
+  <%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary' if patient_signed_in? %>
+  <%= link_to 'Voltar para Perfil', profile_psychologist_path(current_psychologist), class: 'btn btn-secondary' if psychologist_signed_in? %>
+</div>

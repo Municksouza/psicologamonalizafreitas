@@ -1,0 +1,6 @@
+<h1>Confirmar Consulta</h1>
+<p>Data e horário: <%= @appointment.formatted_time_slot %></p>
+<p>Psicólogo: <%= @appointment.psychologist.name %></p>
+
+<%= button_to 'Confirmar', book_patient_appointment_path(@appointment), method: :post, class: 'btn btn-success' %>
+<%= link_to 'Cancelar', new_patient_appointment_path, class: 'btn btn-danger' %>

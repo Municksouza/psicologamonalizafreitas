@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_07_200231) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_21_183154) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_200231) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "appointment_types", force: :cascade do |t|
+    t.string "name"
+    t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "appointments", force: :cascade do |t|
     t.datetime "date"
     t.integer "psychologist_id", null: false
@@ -51,6 +58,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_200231) do
     t.datetime "end_time"
     t.index ["patient_id"], name: "index_appointments_on_patient_id"
     t.index ["psychologist_id"], name: "index_appointments_on_psychologist_id"
+  end
+
+  create_table "availabilities", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "psychologist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["psychologist_id"], name: "index_availabilities_on_psychologist_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -132,6 +148,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_07_200231) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "patients"
   add_foreign_key "appointments", "psychologists"
+  add_foreign_key "availabilities", "psychologists"
   add_foreign_key "messages", "patients"
   add_foreign_key "messages", "psychologists"
   add_foreign_key "testimonials", "patients"

@@ -1,5 +1,4 @@
-<!-- app/views/testimonials/_index.html.erb -->
-<div id="testimonialCarousel" class="carousel slide">
+<div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
   <!-- Indicators -->
   <ol class="carousel-indicators">
     <% if @testimonials.present? %>
@@ -9,22 +8,34 @@
     <% end %>
   </ol>
 
-  <!-- Carousel Items -->
-<div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-  <div class="carousel-inner-testimonial">
+  <div class="carousel-inner-home">
     <% if @testimonials.present? %>
       <% @testimonials.each_with_index do |testimonial, index| %>
         <div class="carousel-item <%= 'active' if index.zero? %>">
-          <div class="card">
-            <img src="<%= testimonial.patient.photo_url %>" class="card-img-top" alt="<%= testimonial.patient.name %>">
+          <div class="card text-center">
+            <!-- Patient's Photo -->
+            <div class="img-depoiments">
+              <img src="<%= testimonial.patient.photo.attached? ? cl_image_path(testimonial.patient.photo.key) : asset_path('patient.jpg') %>"
+                   class="img-fluid patient-photo" alt="<%= testimonial.patient.full_name %>">
+            </div>
+
             <div class="card-body">
-              <h5 class="card-title"><%= testimonial.patient.name %></h5>
+              <!-- Patient's Full Name -->
+              <h5 class="card-title"><%= testimonial.patient.full_name %></h5>
+
+              <!-- Psychologist's Full Name -->
+              <% if testimonial.psychologist %>
+                <p class="text-muted">Referindo-se ao psicólogo: <%= testimonial.psychologist.full_name %></p>
+              <% else %>
+                <p class="text-muted">Sem psicólogo associado.</p>
+              <% end %>
+
+              <!-- Testimonial Content -->
               <p class="card-text"><%= testimonial.content %></p>
-              <% if user_signed_in? %>
-                <% if current_user == testimonial.patient || current_user.psychologist? %>
-                  <%= link_to 'Edit', edit_testimonial_path(testimonial), class: 'btn btn-primary' %>
-                  <%= link_to 'Delete', testimonial_path(testimonial), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-                <% end %>
+
+              <!-- Edit and Delete Buttons (for Patients and Psychologists) -->
+              <% if current_patient == testimonial.patient || psychologist_signed_in? %>
+                <%= link_to 'Delete', testimonial_path(testimonial), method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger btn-sm' %>
               <% end %>
             </div>
           </div>
