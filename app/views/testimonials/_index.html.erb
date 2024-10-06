@@ -15,7 +15,7 @@
           <div class="card text-center">
             <!-- Patient's Photo -->
             <div class="img-depoiments">
-              <img src="<%= testimonial.patient.photo.attached? ? cl_image_path(testimonial.patient.photo.key) : asset_path('default_patient.png') %>"
+              <img src="<%= testimonial.patient.photo.attached? ? cl_image_path(testimonial.patient.photo.key) : asset_path('patient.jpg') %>"
                    class="img-fluid patient-photo" alt="<%= testimonial.patient.full_name %>">
             </div>
 

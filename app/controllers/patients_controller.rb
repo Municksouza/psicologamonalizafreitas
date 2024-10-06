@@ -1,17 +1,26 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [ :show, :new, :create, :edit, :update, :destroy ]
-  before_action :authenticate_patient!, only: [ :profile, :new, :edit, :update, :destroy ]
+  before_action :authenticate_patient!, only: [ :show, :profile, :new, :edit, :update, :destroy ]
 
   def profile
     @patient = current_patient
-    @booked_appointments = current_patient.appointments.where(status: 'booked')
-    @completed_appointments = current_patient.appointments.where(status: 'completed')
+    @booked_appointments = current_patient.appointments.where(status: "booked")
+    @completed_appointments = current_patient.appointments.where(status: "completed")
     @testimonials = current_patient.testimonials
   end
 
   def show
-    @appointments = @patient.appointments
+    Rails.logger.info("Patient ID: #{params[:id]}")  # This logs the ID for debugging purposes
+    @patient = current_patient  # Set to the current authenticated patient
+    @appointment = @patient.appointments.find_by(id: params[:appointment_id])
+
+    if @appointment.nil?
+      # Handle the case when the appointment is not found (e.g., render an error or redirect)
+      flash[:alert] = "Appointment not found."
+      redirect_to profile_patient_path(@patient) and return
+    end
   end
+
 
   def new
     @appointment = Patient.find(params[:id])
@@ -49,7 +58,7 @@ class PatientsController < ApplicationController
   private
 
   def set_patient
-    if params[:id].present? && params[:id] != "sign_out"
+    if params[:id].present? && params[:id] != "sign_out" && params[:id] != "password"
       @patient = Patient.find(params[:id])
     else
       @patient = current_patient

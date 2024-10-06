@@ -1,20 +1,20 @@
-<div class="col-md-4 mb-4">
-  <div class="card-previous-appointments d-flex align-items-center">
-    <div class="appointment-card-header d-flex align-items-center">
-      <% if appointment.psychologist %>
-        <% if appointment.psychologist.photo.attached? %>
-          <%= image_tag cl_image_path(appointment.psychologist.photo.key), alt: 'Monaliza Photo', class: 'image-1' %>
-        <% else %>
-          <%= image_tag asset_path('monaliza.jpg'), alt: 'Default Profile Photo', class: 'image-1' %>
-        <% end %>
-      <% end %>
-      <div class="card-appointments">
-        <p><i class="fa-solid fa-user-doctor"></i> <%= appointment.psychologist.full_name %></p>
-        <p><i class="fa-solid fa-calendar-days"></i> <%= appointment.start_time.strftime("%B %d, %Y at %I:%M %p") %><br /></p>
-        <%= link_to patient_appointments_path(appointment), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-      <i class="fa-sharp fa-solid fa-trash"></i>
-      <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+# <div class="col-md-4 mb-4">
+#   <div class="card-previous-appointments d-flex align-items-center">
+#     <div class="appointment-card-header d-flex align-items-center">
+#       <% if appointment.psychologist %>
+#         <% if appointment.psychologist.photo.attached? %>
+#           <%= image_tag cl_image_path(appointment.psychologist.photo.key), alt: 'Monaliza Photo', class: 'image-1' %>
+#         <% else %>
+#           <%= image_tag asset_path('monaliza.jpg'), alt: 'Default Profile Photo', class: 'image-1' %>
+#         <% end %>
+#       <% end %>
+#       <div class="card-appointments">
+#         <p><i class="fa-solid fa-user-doctor"></i> <%= appointment.psychologist.full_name %></p>
+#         <p><i class="fa-solid fa-calendar-days"></i> <%= appointment.start_time.strftime("%B %d, %Y at %I:%M %p") %><br /></p>
+#         <%= link_to patient_appointments_path(appointment), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+#       <i class="fa-sharp fa-solid fa-trash"></i>
+#       <% end %>
+#       </div>
+#     </div>
+#   </div>
+# </div>

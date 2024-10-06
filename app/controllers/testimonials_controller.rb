@@ -1,10 +1,14 @@
 class TestimonialsController < ApplicationController
   before_action :authenticate_patient!, only: [ :new, :create, :update, :destroy ]
   before_action :set_psychologist, only: [ :new, :create ]
-  before_action :set_testimonial, only: [ :update, :destroy]
+  before_action :set_testimonial, only: [ :update, :destroy ]
 
   def index
     @testimonials = Testimonial.all
+    respond_to do |format|
+      format.html { render partial: "testimonials/index" } # Adjust path if needed
+      format.json { render json: @testimonials }
+    end
   end
 
   def new
@@ -14,7 +18,7 @@ class TestimonialsController < ApplicationController
   def create
     @testimonial = Testimonial.new(testimonial_params)
     if @testimonial.save
-      redirect_to @testimonial, notice:"Depoimento criado com sucesso."
+      redirect_to @testimonial, notice: "Depoimento criado com sucesso."
     else
       render :new
     end

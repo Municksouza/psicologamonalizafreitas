@@ -14,20 +14,24 @@
           <p><strong>Telefone:</strong> <%= current_patient.phone_number %></p>
           <p><strong>Endereço:</strong> <%= current_patient.address %></p>
         </div>
-        <%= link_to "Alterar Senha", edit_patient_registration_path, class: "info-btn" %>
-        <%= link_to "Marcar Consulta", new_patient_appointment_path(current_patient), class: "info-btn" %>
       </div>
 
       <!-- Section for Patient's Picture and "Group1" Image -->
       <div class="patient-picture-container">
         <!-- Patient's Picture -->
         <div class="patient-picture">
-          <img src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" alt="Profile" class="img-fluid rounded-circle">
+          <img src="<%= current_patient.photo.attached? ? cl_image_path(current_patient.photo.key) : asset_path('patient.jpeg') %>" alt="Profile" class="img">
         </div>
 
         <!-- Group1 as "aspa" style -->
         <div class="group1-aspa">
           <%= image_tag 'group1.png', alt: 'Aspa Image', class: 'aspa-img' %>
+        </div>
+
+        <!-- Action Buttons under the patient picture -->
+        <div class="alterar-senha-btn">
+          <%= link_to "Alterar Senha",  edit_patient_registration_path, class: "info-btn mt-3" %>
+          <%= link_to "Marcar Consulta", new_patient_appointment_path(current_patient), class: "info-btn" %>
         </div>
       </div>
     </div>

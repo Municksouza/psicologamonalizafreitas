@@ -58,6 +58,7 @@ group :development, :test do
   gem "capybara", "~> 3.36"
   gem "database_cleaner-active_record"
   gem "dotenv-rails"
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -72,4 +73,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   # gem "selenium-webdriver", "~> 4.24"
   # gem "webdrivers", "~> 5.2.0"
+  gem "rails-controller-testing"
 end

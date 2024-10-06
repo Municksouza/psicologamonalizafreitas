@@ -1,5 +1,4 @@
 <div class="card-show-container">
-  <!-- Consultas Marcadas -->
   <h1>Suas Consultas Marcadas</h1>
 
   <div class="scrollable-list">
@@ -12,7 +11,6 @@
               <p><strong>Data:</strong> <%= appointment.start_time.strftime("%d/%m/%Y %H:%M") %></p>
               <p><strong>Status:</strong> <%= appointment.status.capitalize %></p>
 
-              <!-- Exibir botão de cancelamento se a consulta ainda estiver agendada -->
               <% if appointment.status == 'booked' %>
                 <%= button_to 'Cancelar Consulta', cancel_patient_appointment_patient_appointment_path(current_patient, appointment), method: :delete, class: 'btn btn-danger' %>
               <% end %>
@@ -24,7 +22,6 @@
       <p>Você não tem consultas marcadas no momento.</p>
     <% end %>
   </div>
-
 
   <%= link_to 'Voltar para o Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary mt-3' %>
 </div>

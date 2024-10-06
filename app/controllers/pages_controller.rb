@@ -40,5 +40,4 @@ class PagesController < ApplicationController
       redirect_to new_patient_session_path
     end
   end
-
 end

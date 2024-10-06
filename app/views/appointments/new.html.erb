@@ -1,5 +1,4 @@
 <div class="new-appointment">
-  <!-- Para Psicólogos -->
   <% if psychologist_signed_in? %>
     <h1>Adicione as Datas, Horas e Dias Disponíveis</h1>
     <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
@@ -11,10 +10,8 @@
     <% end %>
   <% end %>
 
-  <!-- Para Pacientes -->
   <% if patient_signed_in? %>
     <h1>Marque Sua Consulta</h1>
-
     <%= simple_form_for @appointment, url: appointments_path, method: :post, local: true do |form| %>
       <label for="appointment_booking_date">Selecione uma data disponível:</label>
       <input id="appointment_booking_date" class="form-control datepicker" readonly="readonly" type="text" name="appointment[start_time]"
@@ -24,17 +21,14 @@
       <div id="timeSlotContainer" style="display: none;">
         <label for="timeSelect">Horários disponíveis:</label>
         <select id="timeSelect" class="form-control" name="appointment[start_time]">
-          <!-- Horários serão adicionados aqui dinamicamente -->
         </select>
       </div>
 
       <button id="submitButton" class="btn btn-primary" disabled>Marcar Consulta</button>
     <% end %>
   <% end %>
+</div>
 
-    </div>
-
-<!-- Ações adicionais para psicólogos -->
 <% if psychologist_signed_in? %>
   <div class="container">
     <h3>Configure sua página de agendamento</h3>
@@ -48,7 +42,6 @@
   </div>
 <% end %>
 
-<!-- Botões de Ação -->
 <div class="btn-container">
   <%= link_to 'Voltar para Perfil', profile_patient_path(current_patient), class: 'btn btn-secondary' if patient_signed_in? %>
   <%= link_to 'Voltar para Perfil', profile_psychologist_path(current_psychologist), class: 'btn btn-secondary' if psychologist_signed_in? %>

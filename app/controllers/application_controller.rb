@@ -71,8 +71,8 @@ class ApplicationController < ActionController::Base
 
   # Permitir parâmetros adicionais de Devise (full_name, address, phone_number, etc.)
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:full_name, :address, :phone_number, :date_of_birth, :photo])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :full_name, :address, :phone_number, :date_of_birth, :photo ])
   end
 
   # Log para rastrear o paciente ou psicólogo atual

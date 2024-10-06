@@ -1,7 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "Psychologists::Sessions", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
+RSpec.describe Psychologists::SessionsHelper, type: :helper do
+  describe "#some_helper_method" do
+    it "returns the expected result" do
+      expect(helper.some_helper_method).to eq("expected value")
+    end
   end
 end

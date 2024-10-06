@@ -3,6 +3,6 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
   def new_booking_email
     @appointment = params[:appointment]
-    mail(to: @appointment.psychologist.email, subject: 'Nova consulta marcada')
+    mail(to: @appointment.psychologist.email, subject: "Nova consulta marcada")
   end
 end
